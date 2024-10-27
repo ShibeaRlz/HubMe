@@ -1,6 +1,9 @@
 # HubMe
 <img width="960" alt="スクリーンショット 2024-10-27 145439" src="https://github.com/user-attachments/assets/f071148a-20f2-4daa-9c54-6f1d189dc970">
 
+## 製品URL
+https://hubme.click
+
 ## 製品概要
 ### 背景(製品開発のきっかけ、課題等）
 <img width="960" alt="スクリーンショット 2024-10-27 130225" src="https://github.com/user-attachments/assets/249159e9-5665-4ad2-b18f-40fd8da69ee0">
@@ -48,7 +51,7 @@ HubMeには、プラットフォーム内で直接やり取りができるメッ
 #### API・データ
 * Go
 * MySql
-* 
+  
 
 #### フレームワーク・ライブラリ・モジュール
 * React
