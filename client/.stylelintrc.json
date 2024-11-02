@@ -4,7 +4,14 @@
 		"stylelint-config-recommended-scss"
 	],
 	"rules": {
-		"font-family-no-missing-generic-family-keyword": null
+		"font-family-no-missing-generic-family-keyword": null,
+		"order/properties-order": null,
+		"selector-pseudo-class-no-unknown": [
+			  true,
+			  {
+				"ignorePseudoClasses": ["global"]
+			  }
+    ]
 	},
 	"plugins": ["stylelint-order"],
 	"ignoreFiles": ["**/node_modules/**"]
