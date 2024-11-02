@@ -1,8 +1,11 @@
 {
-  "extends": [
-    "stylelint-config-recess-order",
-    "stylelint-config-recommended-scss"
-  ],
-  "plugins": ["stylelint-order"],
-  "ignoreFiles": ["**/node_modules/**"]
+	"extends": [
+		"stylelint-config-recess-order",
+		"stylelint-config-recommended-scss"
+	],
+	"rules": {
+		"font-family-no-missing-generic-family-keyword": null
+	},
+	"plugins": ["stylelint-order"],
+	"ignoreFiles": ["**/node_modules/**"]
 }
