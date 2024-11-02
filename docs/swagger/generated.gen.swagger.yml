@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: hubme api
+servers:
+  - url: http://localhost:8080
+paths:
+  /user/signup:
+    post:
+      description: sign up for user
+      operationId: SignupUsers
+      responses:
+        '201':
+          description: Successfully created user
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserSignup'
+        '400':
+          description: can't create user
+        '500':
+          description: Internal Server Error
+  /user/signin:
+    post:
+      description: sign in for user
+      operationId: SigninUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignin'
+      responses:
+        '200':
+          description: Successfully signin user
+components:
+  schemas:
+    UserSignup:
+      type: object
+      properties:
+        name:
+          type: string
+          format: string
+          description: ”ユーザーの名前"
+          example: RCC
+        email:
+          type: string
+          format: string
+          description: メールアドレス
+          example: email
+        password:
+          type: string
+          format: string
+          description: パスワード
+          example: hogehoge
+        img:
+          type: string
+          format: string
+          description: イメージのパス
+          example: hogehoge.jpeg
+        mem1:
+          type: string
+          format: string
+          description: 所属1
+          example: A univ.
+        mem2:
+          type: string
+          format: string
+          description: 所属２
+          example: B Club
+        mem3:
+          type: string
+          format: string
+          description: 所属3
+          example: ''
+    UserSignin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: string
+          description: メールアドレス
+          example: email
+        password:
+          type: string
+          format: string
+          description: hogehoge
+      required:
+        - email
+        - password

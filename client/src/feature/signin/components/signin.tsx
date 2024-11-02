@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Community } from "@/domain/community";
+import { statusAtom } from "@/domain/general";
 import { LoginForm, LoginFormSchema, User, userAtom } from "@/domain/user";
 import { apiClient } from "@/utils/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,20 +29,20 @@ import { useAtom } from "jotai/index";
 import { CircleChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import react, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import style from "./style.module.scss";
-import react, { useState } from "react";
-import { Community } from "@/domain/community";
 
 type LoginCardProps = {
 	// title: string;
 	type: "user" | "community";
 };
 
-export const LoginDialog = (props: LoginCardProps) => {
-	const [currentUser, setCurrentUser] = useAtom<User | null>(userAtom);
+export const SignInDialog = (props: LoginCardProps) => {
+	const [currentUser, setCurrentUser] = useAtom(userAtom);
 	const [currentCommunity, setCurrentCommunity] = useState<Community | null>();
+	const [currentStatus, setCurrentStatus] = useAtom(statusAtom);
 	const router = useRouter();
 
 	react.useEffect(() => {
@@ -86,11 +88,13 @@ export const LoginDialog = (props: LoginCardProps) => {
 					uuid: response.data.uuid,
 				};
 				setCurrentUser(user);
+				setCurrentStatus("user");
 			} else if (props.type === "community") {
 				const community: Community = {
 					uuid: response.data.uuid,
 				};
 				setCurrentCommunity(community);
+				setCurrentStatus("community");
 			}
 
 			router.push("/event");

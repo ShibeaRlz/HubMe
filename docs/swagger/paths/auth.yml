@@ -1,0 +1,31 @@
+user_signup:
+  post:
+    description: sign up for user
+    operationId: SignupUsers
+    responses:
+      201:
+        description: "Successfully created user"
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: "../components/user.yml#/UserSignup"
+      400:
+        description: "can't create user"
+      500:
+        description: "Internal Server Error"
+
+user_signin:
+  post:
+    description: sign in for user
+    operationId: SigninUsers
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "../components/user.yml#/UserSignin"
+    responses:
+      200:
+        description: "Successfully signin user"
+
+

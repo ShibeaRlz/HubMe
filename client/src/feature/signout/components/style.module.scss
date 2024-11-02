@@ -1,0 +1,30 @@
+@use "@/styles/theme";
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 60%;
+  text-align: center;
+  box-shadow: 0 0 8px theme.$black;
+  transform: translate(-50%, -50%);
+
+  .header {
+    margin: 30px;
+    font-family: MOBO;
+    font-size: 50px;
+  }
+
+  .content {
+    place-content: center;
+    height: 60%;
+
+    .button {
+      width: 60%;
+    }
+  }
+}
+
+
+

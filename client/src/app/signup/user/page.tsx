@@ -1,3 +1,4 @@
+"use client"
 import { Property } from "csstype";
 import Page = Property.Page;
 import { SignUpDialog } from "@/feature/signup/components/signup";
