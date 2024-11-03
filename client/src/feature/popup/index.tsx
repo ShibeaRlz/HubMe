@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { EventCard } from '../event';
-import style from './index.module.scss';
-import Letter from '../../../public/letter';
-import InviteForYou from '../../../public/invite-for-you';
-import { Ellipsis, SquareX } from 'lucide-react';
+import { Ellipsis, SquareX } from "lucide-react";
+import React, { useState } from "react";
+import InviteForYou from "../../../public/invite-for-you";
+import Letter from "../../../public/letter";
+import { EventCard } from "../event";
+import style from "./index.module.scss";
 
 interface Tag {
   id: string;
   label: string;
-  variant?: 'red' | 'blue' | 'green' | 'gray';
+  variant?: "red" | "blue" | "green" | "gray";
 }
 
 interface CardType {
@@ -50,7 +50,7 @@ export const Popup: React.FC<PopupProps> = ({ cards }) => {
       </div>
 
       <div className={style.cardWrapper}>
-        {cards.map((card) => (
+        {cards.map(card => (
           <EventCard key={card.title} {...card} />
         ))}
         {cards.length > 3 && (

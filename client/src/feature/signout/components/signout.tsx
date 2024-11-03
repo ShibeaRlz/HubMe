@@ -8,23 +8,23 @@ import React from "react";
 import style from "./style.module.scss";
 
 export const SignOutDialog = () => {
-	const [currentUser, setCurrentUser] = useAtom(userAtom);
+  const [currentUser, setCurrentUser] = useAtom(userAtom);
 
-	React.useEffect(() => {
-		setCurrentUser(null);
-	}, [setCurrentUser]);
+  React.useEffect(() => {
+    setCurrentUser(null);
+  }, [setCurrentUser]);
 
-	return (
-		<Card className={style.card}>
-			<CardHeader>
-				<CardTitle className={style.header}>サインアウトしました</CardTitle>
-			</CardHeader>
+  return (
+    <Card className={style.card}>
+      <CardHeader>
+        <CardTitle className={style.header}>サインアウトしました</CardTitle>
+      </CardHeader>
 
-			<CardContent className={style.content}>
-				<Button asChild className={style.button}>
-					<Link href="/signin/user">サインインはこちら</Link>
-				</Button>
-			</CardContent>
-		</Card>
-	);
+      <CardContent className={style.content}>
+        <Button asChild className={style.button}>
+          <Link href="/signin/user">サインインはこちら</Link>
+        </Button>
+      </CardContent>
+    </Card>
+  );
 };

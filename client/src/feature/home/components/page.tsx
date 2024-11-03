@@ -7,14 +7,14 @@ import { useRouter } from "next/navigation";
 import react, { useState } from "react";
 
 export const HomeComponent = () => {
-	const [currentUser, setCurrentUser] = useAtom(userAtom);
-	const [currentCommunity, setCurrentCommunity] = useState<Community | null>();
-	const [currentStatus, setCurrentStatus] = useAtom(statusAtom);
-	const router = useRouter();
+  const [currentUser, setCurrentUser] = useAtom(userAtom);
+  const [currentCommunity, setCurrentCommunity] = useState<Community | null>();
+  const [currentStatus, setCurrentStatus] = useAtom(statusAtom);
+  const router = useRouter();
 
-	react.useEffect(() => {
-		router.push("/signin/user");
-	});
+  react.useEffect(() => {
+    router.push("/signin/user");
+  });
 
-	return <></>;
+  return <></>;
 };
