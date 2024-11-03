@@ -2,16 +2,13 @@ user_findByID:
   get:
     description: get detail user data by uuid
     operationId: UserFindByID
-    content:
-      application/json:
+    parameters:
+      - name: uuid
+        in: path
+        required: true
+        description: "タスクのID"
         schema:
-          type: object
-          properties:
-            uuid:
-              type: string
-              format: string
-              description: "ユーザーのuuid"
-              example: "ffafafafffafaf"
+          type: string
 
     responses:
       200:
