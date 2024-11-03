@@ -5,18 +5,47 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
+  /user/{uuid}:
+    get:
+      description: get detail user data by uuid
+      operationId: UserFindByID
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              uuid:
+                type: string
+                format: string
+                description: ユーザーのuuid
+                example: ffafafafffafaf
+      responses:
+        '200':
+          description: Successfully get user data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: successful get user by id
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Failed to find user data by uuid
   /user/signup:
     post:
       description: sign up for user
       operationId: SignupUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignup'
       responses:
         '201':
           description: Successfully created user
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/UserSignup'
         '400':
           description: can't create user
         '500':
@@ -33,8 +62,66 @@ paths:
       responses:
         '200':
           description: Successfully signin user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    format: string
+                    description: ユーザーのuuid
+                    example: ffafafafffafaf
 components:
   schemas:
+    User:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: string
+          description: ユーザーのid
+          example: ffafafafffafaf
+        name:
+          type: string
+          format: string
+          description: ”ユーザーの名前"
+          example: RCC
+        email:
+          type: string
+          format: string
+          description: メールアドレス
+          example: email
+        password:
+          type: string
+          format: string
+          description: パスワード
+          example: hogehoge
+        img:
+          type: string
+          format: string
+          description: イメージのパス
+          example: hogehoge.jpeg
+        self:
+          type: string
+          format: string
+          description: 自己紹介
+          example: hogehoge
+        mem1:
+          type: string
+          format: string
+          description: 所属1
+          example: A univ.
+        mem2:
+          type: string
+          format: string
+          description: 所属２
+          example: B Club
+        mem3:
+          type: string
+          format: string
+          description: 所属3
+          example: ''
     UserSignup:
       type: object
       properties:
@@ -73,6 +160,14 @@ components:
           format: string
           description: 所属3
           example: ''
+      required:
+        - name
+        - email
+        - password
+        - img
+        - mem1
+        - mem2
+        - mem3
     UserSignin:
       type: object
       properties:

@@ -1,15 +1,48 @@
+user_findByID:
+  get:
+    description: get detail user data by uuid
+    operationId: UserFindByID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            uuid:
+              type: string
+              format: string
+              description: "ユーザーのuuid"
+              example: "ffafafafffafaf"
+
+    responses:
+      200:
+        description: "Successfully get user data"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "successful get user by id"
+                user:
+                  $ref: "../components/user.yml#/User"
+      400:
+        description: "Failed to find user data by uuid"
+
 user_signup:
   post:
     description: sign up for user
     operationId: SignupUsers
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "../components/user.yml#/UserSignup"
+
     responses:
       201:
         description: "Successfully created user"
-        content:
-          application/json:
-            schema:
-              items:
-                $ref: "../components/user.yml#/UserSignup"
+
       400:
         description: "can't create user"
       500:
@@ -27,5 +60,16 @@ user_signin:
     responses:
       200:
         description: "Successfully signin user"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  format: string
+                  description: "ユーザーのuuid"
+                  example: "ffafafafffafaf"
+
 
 

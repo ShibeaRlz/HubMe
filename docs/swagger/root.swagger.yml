@@ -5,6 +5,8 @@ info:
 servers:
   - url: "http://localhost:8080"
 paths:
+  /user/{uuid}:
+    $ref: "./paths/auth.yml#/user_findByID"
   /user/signup:
     $ref: "./paths/auth.yml#/user_signup"
   /user/signin:

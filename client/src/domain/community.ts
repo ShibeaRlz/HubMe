@@ -13,4 +13,4 @@ export type Community = {
   // mem3: number;
   // tag: number[];
 };
-export const userAtom = atom<Community | null>(null);
+export const communityAtom = atom<Community | null>(null);

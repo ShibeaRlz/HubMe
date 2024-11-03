@@ -52,19 +52,21 @@ export const SignInDialog = (props: LoginCardProps) => {
 
   let title = "";
   let alternative = "";
-  let api_url = "";
+  let get_base_url = "";
+  let signin_url = "";
   let signup_url = "";
   let link = "";
   if (props.type === "user") {
     title = "利用者ログイン";
     alternative = "イベント・サークル運営者の方はこちら";
-    api_url = "/user/signin";
+    get_base_url = "/user";
+    signin_url = "/user/signin";
     signup_url = "/signup/user";
     link = "/login/community";
   } else if (props.type === "community") {
     title = "イベント・サークル運営者ログイン";
     alternative = "利用者の方はこちら";
-    api_url = "/community/signin";
+    signin_url = "/community/signin";
     signup_url = "/signup/community";
     link = "/login/user";
   }
@@ -80,20 +82,29 @@ export const SignInDialog = (props: LoginCardProps) => {
   const onSubmit = async (data: z.infer<typeof LoginFormSchema>) => {
     try {
       // await apiClient.post(api_url, data);
-
-      const response = await apiClient.post(api_url, data);
+      const signInResponse = await apiClient.post(signin_url, data);
 
       if (props.type === "user") {
+        setCurrentStatus("user");
+        const uuid = signInResponse.data.uuid;
+        const response = await apiClient.get(`${get_base_url}/${uuid}`);
         const user: User = {
-          uuid: response.data.uuid,
+          uuid: response.data.user.uuid,
+          name: response.data.user.name,
+          email: response.data.user.email,
+          img: response.data.user.img,
+          self: response.data.user.self,
+          tags: response.data.user.tagss,
+          mem1: response.data.user.mem1,
+          mem2: response.data.user.mem2,
+          mem3: response.data.user.mem3,
         };
         setCurrentUser(user);
-        setCurrentStatus("user");
       } else if (props.type === "community") {
-        const community: Community = {
-          uuid: response.data.uuid,
-        };
-        setCurrentCommunity(community);
+        // const community: Community = {
+        //   uuid: response.data.uuid,
+        // };
+        // setCurrentCommunity(community);
         setCurrentStatus("community");
       }
 

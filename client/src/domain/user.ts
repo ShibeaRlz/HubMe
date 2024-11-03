@@ -11,7 +11,7 @@ export type User = {
   mem1: number;
   mem2: number;
   mem3: number;
-  tag: number[];
+  tags: number[];
 };
 export const userAtom = atom<User | null>(null);
 
