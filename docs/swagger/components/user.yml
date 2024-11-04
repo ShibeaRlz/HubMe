@@ -1,0 +1,115 @@
+User:
+  type: object
+  properties:
+      uuid:
+        type: string
+        format: string
+        description: "ユーザーのid"
+        example: "ffafafafffafaf"
+      name:
+        type: string
+        format: string
+        description: ”ユーザーの名前"
+        example: "RCC"
+      email:
+        type: string
+        format: string
+        description: "メールアドレス"
+        example: "email"
+      password:
+        type: string
+        format: string
+        description: "パスワード"
+        example: "hogehoge"
+      img:
+        type: string
+        format: string
+        description: "イメージのパス"
+        example: "hogehoge.jpeg"
+      self:
+        type: string
+        format: string
+        description: "自己紹介"
+        example: "hogehoge"
+      mem1:
+        type: string
+        format: string
+        description: "所属1"
+        example: "A univ."
+      mem2:
+        type: string
+        format: string
+        description: "所属２"
+        example: "B Club"
+      mem3:
+        type: string
+        format: string
+        description: "所属3"
+        example: ""
+
+
+UserSignup:
+  type: object
+  properties:
+    name:
+      type: string
+      format: string
+      description: ”ユーザーの名前"
+      example: "RCC"
+    email:
+      type: string
+      format: string
+      description: "メールアドレス"
+      example: "email"
+    password:
+      type: string
+      format: string
+      description: "パスワード"
+      example: "hogehoge"
+    img:
+      type: string
+      format: string
+      description: "イメージのパス"
+      example: "hogehoge.jpeg"
+    mem1:
+      type: string
+      format: string
+      description: "所属1"
+      example: "A univ."
+    mem2:
+      type: string
+      format: string
+      description: "所属２"
+      example: "B Club"
+    mem3:
+      type: string
+      format: string
+      description: "所属3"
+      example: ""
+  required:
+    - name
+    - email
+    - password
+    - img
+    - mem1
+    - mem2
+    - mem3
+
+UserSignin:
+  type: object
+  properties:
+    email:
+      type: string
+      format: string
+      description: "メールアドレス"
+      example: "email"
+    password:
+      type: string
+      format: string
+      description: "hogehoge"
+  required:
+    - email
+    - password
+
+
+

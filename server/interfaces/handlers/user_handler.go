@@ -45,10 +45,13 @@ func (h *userHandler) Update(ctx *gin.Context) {
 
 func (h *userHandler) FindByID(ctx *gin.Context) {
 	var request UserFindByIDRequest
-	if err := ctx.ShouldBindJSON(&request); err != nil {
-		ctx.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
+	//if err := ctx.ShouldBindJSON(&request); err != nil {
+	//	log.Println(request)
+	//	ctx.JSON(400, gin.H{"error": err.Error()})
+	//	return
+	//}
+
+	request.UUID = ctx.Param("uuid")
 
 	fmt.Println(request)
 
@@ -59,5 +62,5 @@ func (h *userHandler) FindByID(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"message": "login in successful", "user": user})
+	ctx.JSON(http.StatusOK, gin.H{"message": "successful get user by id", "user": user})
 }

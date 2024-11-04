@@ -1,32 +1,30 @@
-'use client'
+"use client";
 
-import type { ReactElement } from "react"
-import { useState } from "react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card"
-import CardTag from "@/components/tags/card-tag"
-import {  Heart, SquareX } from "lucide-react"
-import style from "./style.module.scss"
+import CardTag from "@/components/tags/card-tag";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Heart, SquareX } from "lucide-react";
+import type { ReactElement } from "react";
+import { useState } from "react";
+import style from "./style.module.scss";
 
-
-type TagVariant = "red" | "blue" | "green" | "gray"
+type TagVariant = "red" | "blue" | "green" | "gray";
 
 interface Tag {
-  id: string
-  label: string
-  variant?: TagVariant
+  id: string;
+  label: string;
+  variant?: TagVariant;
 }
 
 interface EventCardProps {
-  title: string
-  publisher: string
-  publisherIcon: string
-  datetime: string
-  tags: Tag[]
-  imageUrl: string
-  liked?: boolean
+  title: string;
+  publisher: string;
+  publisherIcon: string;
+  datetime: string;
+  tags: Tag[];
+  imageUrl: string;
+  liked?: boolean;
 }
-
 
 export function EventCard({
   title,
@@ -37,15 +35,14 @@ export function EventCard({
   imageUrl = "https://github.com/shadcn.png",
   liked = false,
 }: EventCardProps): ReactElement {
-  const [isLiked, setIsLiked] = useState(liked)
+  const [isLiked, setIsLiked] = useState(liked);
 
   return (
-
     <Card className={style.card}>
       <CardHeader className={style.cardHeader}>
         <div className={style.tagWrapper}>
           <div className={style.tags}>
-            {tags.map((tag) => (
+            {tags.map(tag => (
               <CardTag key={tag.id} variant={tag.variant ?? "red"}>
                 {tag.label}
               </CardTag>
@@ -59,11 +56,7 @@ export function EventCard({
 
       <CardContent>
         <div className={style.imgBox}>
-          <img
-            className={style.img}
-            src={imageUrl}
-            alt={title}
-          />
+          <img className={style.img} src={imageUrl} alt={title} />
         </div>
         <div className={style.icons}>
           <Heart
@@ -90,6 +83,6 @@ export function EventCard({
           </div>
         </div>
       </CardFooter>
-    </Card >
-  )
+    </Card>
+  );
 }

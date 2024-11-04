@@ -75,7 +75,7 @@ func main() {
 	router.POST("/user/signup", authUserHandler.SignUp)
 
 	router.PUT("/user", userHandler.Update)
-	router.GET("/user", userHandler.FindByID)
+	router.GET("/user/:uuid", userHandler.FindByID)
 
 	router.POST("/community/signin", authCommunityHandler.SignIn)
 	router.POST("/community/signup", authCommunityHandler.SignUp)
