@@ -1,10 +1,18 @@
+UserUUID:
+    - name: uuid
+      in: path
+      required: true
+      description: "ユーザーのID"
+      schema:
+        type: string
+
 User:
   type: object
   properties:
       uuid:
         type: string
         format: string
-        description: "ユーザーのid"
+        description: "ユーザーのuuid"
         example: "ffafafafffafaf"
       name:
         type: string
@@ -24,7 +32,7 @@ User:
       img:
         type: string
         format: string
-        description: "イメージのパス"
+        description: "イメージのs3パス"
         example: "hogehoge.jpeg"
       self:
         type: string
@@ -46,6 +54,11 @@ User:
         format: string
         description: "所属3"
         example: ""
+  required:
+    - uuid
+    - name
+    - email
+    - password
 
 
 UserSignup:
@@ -90,10 +103,6 @@ UserSignup:
     - name
     - email
     - password
-    - img
-    - mem1
-    - mem2
-    - mem3
 
 UserSignin:
   type: object

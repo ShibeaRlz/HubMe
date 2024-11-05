@@ -2,15 +2,15 @@ import { atom } from "jotai";
 import { z } from "zod";
 
 export type User = {
-  uuid: number;
+  uuid: string;
   name: string;
   email: string;
   password: string;
   img: string;
   self: string;
-  mem1: number;
-  mem2: number;
-  mem3: number;
+  mem1: string;
+  mem2: string;
+  mem3: string;
   tags: number[];
 };
 export const userAtom = atom<User | null>(null);

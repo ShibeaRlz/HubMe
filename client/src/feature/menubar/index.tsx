@@ -36,10 +36,13 @@ const mockData = [
 
 const inviteNum = 3;
 const mailNum = 80;
-const userIcon = "https://github.com/shadcn.png";
+let userIcon = "https://github.com/shadcn.png";
 
 export const Menubar = () => {
   const [currentUser, setCurrentUser] = useAtom(userAtom);
+  if (currentUser?.img) {
+    userIcon = currentUser?.img;
+  }
   return (
     <div className={style.header}>
       <div className={style.icons}>

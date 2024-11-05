@@ -17,17 +17,25 @@ import style from "@/feature/profile/components/style.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CircleChevronRight } from "lucide-react";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { User, userAtom } from "@/domain/user";
+import { uploadImageToS3 } from "@/lib/utils";
+import { apiClient } from "@/utils/client";
+import { useAtom } from "jotai/index";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const profileFormShema = z.object({
-  nickname: z.string().min(1, { message: "入力必須な項目です。" }),
-  belong_to1: z.string().min(1, { message: "入力必須な項目です。" }),
-  belong_to2: z.string(),
-  belong_to3: z.string(),
-  mail: z.string().min(1, { message: "入力必須な項目です。" }),
-  password: z.string().min(1, { message: "入力必須な項目です。" }),
-  introduction: z.string(),
+  name: z.string().min(1, { message: "入力必須な項目です。" }),
+  mem1: z.string().min(1, { message: "入力必須な項目です。" }),
+  mem2: z.string().optional(),
+  mem3: z.string(),
+  img: z.string(),
+  email: z.string().min(1, { message: "入力必須な項目です。" }),
+  self: z.string(),
 });
 
 type PrpfileSettingProps = {
@@ -37,7 +45,6 @@ type PrpfileSettingProps = {
 export const ProfileSetting = (props: PrpfileSettingProps) => {
   let name = "";
   let introduce = "";
-
   if (props.type === "user") {
     name = "ニックネーム";
     introduce = "自己紹介";
@@ -46,21 +53,79 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
     introduce = "団体紹介";
   }
 
+  const [currentUser, setCurrentUser] = useAtom(userAtom);
+  const [preview, setPreview] = React.useState("");
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof profileFormShema>>({
     resolver: zodResolver(profileFormShema),
     defaultValues: {
-      nickname: "",
-      belong_to1: "",
-      belong_to2: "",
-      belong_to3: "",
-      mail: "",
-      password: "",
-      introduction: "",
+      name: currentUser?.name || "",
+      mem1: "",
+      mem2: "",
+      mem3: "",
+      img: "",
+      email: "",
+      self: "",
     },
   });
-  const onSubmit = (data: z.infer<typeof profileFormShema>) => {
-    console.log("フォーム送信データ:", data);
+  const onIconChange = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const url = await uploadImageToS3(file);
+      console.log(url);
+      if (url) {
+        form.setValue("img", url);
+        setPreview(url);
+      }
+    }
   };
+  const onSubmit = async (data: z.infer<typeof profileFormShema>) => {
+    if (currentUser?.uuid !== "") {
+      const user: User = {
+        uuid: currentUser?.uuid,
+        name: data?.name,
+        mem1: data?.mem1,
+        mem2: data?.mem2,
+        mem3: data?.mem3,
+        self: data?.self,
+        img: data?.img,
+        email: data?.email,
+      };
+      // console.log("user:", user);
+      await apiClient.put("user", user);
+
+      const setUser: User = {
+        uuid: currentUser?.uuid,
+        name: data?.name,
+        img: data?.img,
+      };
+      setCurrentUser(setUser);
+      router.push("/event");
+    } else {
+      router.push("user/signin");
+    }
+  };
+
+  React.useEffect(() => {
+    if (currentUser?.uuid) {
+      apiClient.get(`/user/${currentUser?.uuid}`).then(res => {
+        console.log(res.data);
+        form.reset({
+          name: res.data.user.name,
+          mem1: res.data.user.mem1,
+          mem2: res.data.user.mem2,
+          mem3: res.data.user.mem3,
+          img: res.data.user.img,
+          email: res.data.user.email,
+          self: res.data.user.self,
+        });
+        setPreview(res.data.user.img);
+      });
+    } else {
+      router.push("/signin/user");
+    }
+  }, [currentUser, router, form]);
 
   return (
     <Card className={style.card}>
@@ -72,7 +137,7 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
           <CardContent>
             <FormField
               control={form.control}
-              name="nickname"
+              name="name"
               render={({ field }) => (
                 <FormItem className={style.form}>
                   <FormLabel className={style.label}>
@@ -88,7 +153,7 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
             />
             <FormField
               control={form.control}
-              name="belong_to1"
+              name="mem1"
               render={({ field }) => (
                 <FormItem className={style.form}>
                   <FormLabel className={style.label}>
@@ -104,7 +169,7 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
 
             <FormField
               control={form.control}
-              name="belong_to2"
+              name="mem2"
               render={({ field }) => (
                 <FormItem className={style.form}>
                   <FormLabel className={style.label}>所属2</FormLabel>
@@ -118,7 +183,7 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
 
             <FormField
               control={form.control}
-              name="belong_to3"
+              name="mem3"
               render={({ field }) => (
                 <FormItem className={style.form}>
                   <FormLabel className={style.label}>所属3</FormLabel>
@@ -132,7 +197,39 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
 
             <FormField
               control={form.control}
-              name="mail"
+              name="img"
+              render={({ field: { onChange, value, ...field } }) => (
+                <FormItem className={style.form}>
+                  <FormLabel>アイコン</FormLabel>
+                  <div className={style.avatorForm}>
+                    {preview ? (
+                      <Avatar className={style.avatorPreview}>
+                        <AvatarImage src={preview} />
+                        <AvatarFallback>BU</AvatarFallback>
+                      </Avatar>
+                    ) : (
+                      <Avatar>
+                        <AvatarImage />
+                        <AvatarFallback>BU</AvatarFallback>
+                      </Avatar>
+                    )}
+                    <FormControl className={style.avatorFormControl}>
+                      <Input
+                        type="file"
+                        {...field}
+                        className={style.avatorinput}
+                        onChange={onIconChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="email"
               render={({ field }) => (
                 <FormItem className={style.form}>
                   <FormLabel className={style.label}>
@@ -146,28 +243,12 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className={style.form}>
-                  <FormLabel className={style.label}>
-                    <span className={style.span}>*</span>パスワード
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder="text" {...field} className={style.input} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <br />
             <br />
 
             <FormField
               control={form.control}
-              name="introduction"
+              name="self"
               render={({ field }) => (
                 <FormItem className={style.form}>
                   <FormLabel className={style.label}>{introduce}</FormLabel>

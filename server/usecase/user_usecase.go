@@ -22,6 +22,7 @@ type InputUserUpdate struct {
 	Tags     []string `json:"tag"`
 }
 
+// uuid
 type InputUserFindByID struct {
 	UUID string
 }
