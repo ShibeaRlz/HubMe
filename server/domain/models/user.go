@@ -3,7 +3,7 @@ package models
 import "github.com/google/uuid"
 
 type User struct {
-	UUID     uuid.UUID `gorm:"primarykey;type:varchar(36)" json:"id"`
+	UUID     uuid.UUID `gorm:"primarykey;type:varchar(36)" json:"uuid"`
 	Name     string    `gorm:"type:varchar(255);not null" json:"name"`
 	Email    string    `gorm:"type:varchar(255);unique;not null" json:"email"`
 	Password []byte    `gorm:"type:varchar(255);not null" json:"password"`

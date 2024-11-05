@@ -5,6 +5,32 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
+  /user:
+    put:
+      description: put detail user data by uuid
+      operationId: UserPutByID
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: ユーザーのID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully put user data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: successful put user by id
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Failed to find user data by uuid
   /user/{uuid}:
     get:
       description: get detail user data by uuid
@@ -13,7 +39,7 @@ paths:
         - name: uuid
           in: path
           required: true
-          description: タスクのID
+          description: ユーザーのID
           schema:
             type: string
       responses:
@@ -77,7 +103,7 @@ components:
         uuid:
           type: string
           format: string
-          description: ユーザーのid
+          description: ユーザーのuuid
           example: ffafafafffafaf
         name:
           type: string
@@ -97,7 +123,7 @@ components:
         img:
           type: string
           format: string
-          description: イメージのパス
+          description: イメージのs3パス
           example: hogehoge.jpeg
         self:
           type: string
@@ -119,6 +145,11 @@ components:
           format: string
           description: 所属3
           example: ''
+      required:
+        - uuid
+        - name
+        - email
+        - password
     UserSignup:
       type: object
       properties:
@@ -161,10 +192,6 @@ components:
         - name
         - email
         - password
-        - img
-        - mem1
-        - mem2
-        - mem3
     UserSignin:
       type: object
       properties:

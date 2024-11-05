@@ -88,16 +88,17 @@ export const SignInDialog = (props: LoginCardProps) => {
         setCurrentStatus("user");
         const uuid = signInResponse.data.uuid;
         const response = await apiClient.get(`${get_base_url}/${uuid}`);
+        console.log(response);
         const user: User = {
           uuid: response.data.user.uuid,
           name: response.data.user.name,
-          email: response.data.user.email,
+          // email: response.data.user.email,
           img: response.data.user.img,
-          self: response.data.user.self,
-          tags: response.data.user.tagss,
-          mem1: response.data.user.mem1,
-          mem2: response.data.user.mem2,
-          mem3: response.data.user.mem3,
+          // self: response.data.user.self,
+          // tags: response.data.user.tagss,
+          // mem1: response.data.user.mem1,
+          // mem2: response.data.user.mem2,
+          // mem3: response.data.user.mem3,
         };
         setCurrentUser(user);
       } else if (props.type === "community") {

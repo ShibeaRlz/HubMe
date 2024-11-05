@@ -1,4 +1,25 @@
-user_findByID:
+user:
+  put:
+    description: put detail user data by uuid
+    operationId: UserPutByID
+    parameters:
+     $ref: "../components/user.yml#/UserUUID"
+    responses:
+      200:
+        description: "Successfully put user data"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "successful put user by id"
+                user:
+                  $ref: "../components/user.yml#/User"
+      400:
+        description: "Failed to find user data by uuid"
+user_byUUID:
   get:
     description: get detail user data by uuid
     operationId: UserFindByID
@@ -6,9 +27,16 @@ user_findByID:
       - name: uuid
         in: path
         required: true
-        description: "タスクのID"
+        description: "ユーザーのID"
         schema:
           type: string
+#    parameters:
+#      - name: uuid
+#        in: path
+#        required: true
+#        description: "タスクのID"
+#        schema:
+#          type: string
 
     responses:
       200:
@@ -25,6 +53,9 @@ user_findByID:
                   $ref: "../components/user.yml#/User"
       400:
         description: "Failed to find user data by uuid"
+
+
+
 
 user_signup:
   post:
@@ -53,7 +84,7 @@ user_signin:
       content:
         application/json:
           schema:
-            $ref: "../components/user.yml#/UserSignin"
+              $ref: "../components/user.yml#/UserSignin"
     responses:
       200:
         description: "Successfully signin user"
