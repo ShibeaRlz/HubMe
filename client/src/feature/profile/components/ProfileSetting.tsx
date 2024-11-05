@@ -60,7 +60,13 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
   const form = useForm<z.infer<typeof profileFormShema>>({
     resolver: zodResolver(profileFormShema),
     defaultValues: {
-      name: currentUser?.name,
+      name: currentUser?.name || "",
+      mem1: "",
+      mem2: "",
+      mem3: "",
+      img: "",
+      email: "",
+      self: "",
     },
   });
   const onIconChange = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
