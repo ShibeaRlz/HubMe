@@ -1,90 +1,13 @@
-user:
-  put:
-    description: put detail user data by uuid
-    operationId: UserPutByID
-    parameters:
-     $ref: "../components/user.yml#/UserUUID"
-    responses:
-      200:
-        description: "Successfully put user data"
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                  type: string
-                  example: "successful put user by id"
-                user:
-                  $ref: "../components/user.yml#/User"
-      400:
-        description: "Failed to find user data by uuid"
-user_byUUID:
-  get:
-    description: get detail user data by uuid
-    operationId: UserFindByID
-    parameters:
-      - name: uuid
-        in: path
-        required: true
-        description: "ユーザーのID"
-        schema:
-          type: string
-#    parameters:
-#      - name: uuid
-#        in: path
-#        required: true
-#        description: "タスクのID"
-#        schema:
-#          type: string
-
-    responses:
-      200:
-        description: "Successfully get user data"
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                  type: string
-                  example: "successful get user by id"
-                user:
-                  $ref: "../components/user.yml#/User"
-      400:
-        description: "Failed to find user data by uuid"
-
-
-
-
-user_signup:
-  post:
-    description: sign up for user
-    operationId: SignupUsers
-    requestBody:
-      content:
-        application/json:
-          schema:
-            $ref: "../components/user.yml#/UserSignup"
-
-    responses:
-      201:
-        description: "Successfully created user"
-
-      400:
-        description: "can't create user"
-      500:
-        description: "Internal Server Error"
-
 user_signin:
   post:
-    description: sign in for user
-    operationId: SigninUsers
+    summary: ユーザーのサインイン
+    description: ユーザーのサインイン
+    operationId: SigninUser
     requestBody:
       content:
         application/json:
           schema:
-              $ref: "../components/user.yml#/UserSignin"
+              $ref: "../components/auth.yml#/Signin"
     responses:
       200:
         description: "Successfully signin user"
@@ -99,5 +22,57 @@ user_signin:
                   description: "ユーザーのuuid"
                   example: "ffafafafffafaf"
 
+user_signup:
+  post:
+    summary: ユーザーのサインアップ
+    description: ユーザーのサインアップ
+    operationId: SignupUser
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "../components/user.yml#/User"
+    responses:
+      201:
+        description: "サインアップ成功"
 
 
+
+community_signin:
+  post:
+    summary: コミュニティのサインイン
+    description: コミュニティのサインイン
+    operationId: SigninCommunity
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "../components/auth.yml#/Signin"
+    responses:
+      200:
+        description: "Successfully signin community"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  format: string
+                  description: "communityのuuid"
+                  example: "ffafafafffafaf"
+
+
+community_signup:
+  post:
+    summary: コミュニティのサインアップ
+    description: コミュニティのサインアップ
+    operationId: SignupCommunity
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "../components/community.yml#/Community"
+    responses:
+      201:
+        description: "サインアップ成功"

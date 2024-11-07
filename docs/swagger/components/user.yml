@@ -1,24 +1,24 @@
-UserUUID:
-    - name: uuid
-      in: path
-      required: true
-      description: "ユーザーのID"
-      schema:
-        type: string
+UserUUIDRequest:
+    name: uuid
+    in: path
+    required: true
+    description: "ユーザーのID"
+    schema:
+      type: string
 
 User:
   type: object
   properties:
-      uuid:
-        type: string
-        format: string
-        description: "ユーザーのuuid"
-        example: "ffafafafffafaf"
+#      uuid:
+#        type: string
+#        format: string
+#        description: "ユーザーのuuid"
+#        example: "ffafafafffafaf"
       name:
         type: string
         format: string
         description: ”ユーザーの名前"
-        example: "RCC"
+        example: "やまけん"
       email:
         type: string
         format: string
@@ -61,64 +61,65 @@ User:
     - password
 
 
-UserSignup:
-  type: object
-  properties:
-    name:
-      type: string
-      format: string
-      description: ”ユーザーの名前"
-      example: "RCC"
-    email:
-      type: string
-      format: string
-      description: "メールアドレス"
-      example: "email"
-    password:
-      type: string
-      format: string
-      description: "パスワード"
-      example: "hogehoge"
-    img:
-      type: string
-      format: string
-      description: "イメージのパス"
-      example: "hogehoge.jpeg"
-    mem1:
-      type: string
-      format: string
-      description: "所属1"
-      example: "A univ."
-    mem2:
-      type: string
-      format: string
-      description: "所属２"
-      example: "B Club"
-    mem3:
-      type: string
-      format: string
-      description: "所属3"
-      example: ""
-  required:
-    - name
-    - email
-    - password
+#UserSignup:
+#  type: object
+#  properties:
+#    name:
+#      type: string
+#      format: string
+#      description: ”ユーザーの名前"
+#      example: "RCC"
+#    email:
+#      type: string
+#      format: string
+#      description: "メールアドレス"
+#      example: "email"
+#    password:
+#      type: string
+#      format: string
+#      description: "パスワード"
+#      example: "hogehoge"
+#    img:
+#      type: string
+#      format: string
+#      description: "イメージのパス"
+#      example: "hogehoge.jpeg"
+#    mem1:
+#      type: string
+#      format: string
+#      description: "所属1"
+#      example: "A univ."
+#    mem2:
+#      type: string
+#      format: string
+#      description: "所属２"
+#      example: "B Club"
+#    mem3:
+#      type: string
+#      format: string
+#      description: "所属3"
+#      example: ""
+#  required:
+#    - name
+#    - email
+#    - password
 
-UserSignin:
-  type: object
-  properties:
-    email:
-      type: string
-      format: string
-      description: "メールアドレス"
-      example: "email"
-    password:
-      type: string
-      format: string
-      description: "hogehoge"
-  required:
-    - email
-    - password
+#UserSignin:
+#  type: object
+#  properties:
+#    email:
+#      type: string
+#      format: string
+#      description: "メールアドレス"
+#      example: "email"
+#    password:
+#      type: string
+#      format: string
+#      description: "パスワード"
+#      example: "hogehoge"
+#  required:
+#    - email
+#    - password
 
 
 

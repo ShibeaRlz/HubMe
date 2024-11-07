@@ -102,6 +102,7 @@ export const SignInDialog = (props: LoginCardProps) => {
         };
         setCurrentUser(user);
       } else if (props.type === "community") {
+        const response = await apiClient.get(`${get_base_url}/${uuid}`);
         // const community: Community = {
         //   uuid: response.data.uuid,
         // };

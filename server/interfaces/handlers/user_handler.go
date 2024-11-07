@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/jphacks/os_2403/usecase"
 	"net/http"
 )
@@ -29,6 +30,7 @@ func NewUserHandler(userUsecase usecase.IUesrUsecase) IUserHandler {
 
 func (h *userHandler) Update(ctx *gin.Context) {
 	var request UserUpdateRequest
+	request.UUID, _ = uuid.Parse(ctx.Param("uuid"))
 	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -45,11 +47,6 @@ func (h *userHandler) Update(ctx *gin.Context) {
 
 func (h *userHandler) FindByID(ctx *gin.Context) {
 	var request UserFindByIDRequest
-	//if err := ctx.ShouldBindJSON(&request); err != nil {
-	//	log.Println(request)
-	//	ctx.JSON(400, gin.H{"error": err.Error()})
-	//	return
-	//}
 
 	request.UUID = ctx.Param("uuid")
 

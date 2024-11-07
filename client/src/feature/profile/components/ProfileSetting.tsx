@@ -93,7 +93,7 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
         email: data?.email,
       };
       // console.log("user:", user);
-      await apiClient.put("user", user);
+      await apiClient.put(`/user/${currentUser?.uuid}`, user);
 
       const setUser: User = {
         uuid: currentUser?.uuid,
