@@ -1,6 +1,7 @@
 import { Menubar } from "@/feature/menubar";
 import type { Metadata } from "next";
 import "@/styles/globals.scss";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "HubMe",
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen">
         <Menubar />
         <main className="flex-grow">{children}</main>
+        <Toaster />
       </body>
     </html>
   );
