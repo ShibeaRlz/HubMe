@@ -30,7 +30,12 @@ func NewUserHandler(userUsecase usecase.IUesrUsecase) IUserHandler {
 
 func (h *userHandler) Update(ctx *gin.Context) {
 	var request UserUpdateRequest
-	request.UUID, _ = uuid.Parse(ctx.Param("uuid"))
+	var err error
+	request.UUID, err = uuid.Parse(ctx.Param("uuid"))
+	if err != nil {
+		ctx.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
 	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return

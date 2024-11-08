@@ -13,6 +13,19 @@ export type User = {
   mem3: string;
   tags: number[];
 };
+
+// export const userSchema = z.object({
+//     uuid: z.string().min(1),
+//     name: z.string().min(1),
+//     email: z.string().min(1),
+//     password: z.string().optional(),
+//     img: z.string().optional(),
+//     self: z.string().optional(),
+//     mem1: z.string().optional(),
+//     mem2: z.string().optional().
+//     mem3: z.string().optional(),
+//     tags: number[];
+// })
 export const userAtom = atom<User | null>(null);
 
 export const SignupFormSchema = z.object({

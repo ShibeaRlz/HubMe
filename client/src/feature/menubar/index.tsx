@@ -11,10 +11,12 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { communityAtom } from "@/domain/community";
+import { accountTypeAtom } from "@/domain/general";
 import { userAtom } from "@/domain/user";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useAtom } from "jotai/index";
-import { CreditCard, Settings, User } from "lucide-react";
+import { CreditCard, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { MailIcon } from "./components/mail";
@@ -36,13 +38,29 @@ const mockData = [
 
 const inviteNum = 3;
 const mailNum = 80;
-let userIcon = "https://github.com/shadcn.png";
 
 export const Menubar = () => {
-  const [currentUser, setCurrentUser] = useAtom(userAtom);
-  if (currentUser?.img) {
-    userIcon = currentUser?.img;
+  let accountName = "";
+  let accountIcon = "https://github.com/shadcn.png";
+  let settingURI = "";
+  const [currentAccountType, setCurrentAccountType] = useAtom(accountTypeAtom);
+  const [currentUser] = useAtom(userAtom);
+  const [currentCommunity] = useAtom(communityAtom);
+
+  if (currentAccountType === "user") {
+    if (currentUser?.img) {
+      accountIcon = currentUser?.img;
+    }
+    accountName = currentUser?.name;
+    settingURI = "/profile/setting/user";
+  } else {
+    if (currentCommunity?.img) {
+      accountIcon = currentCommunity?.img;
+    }
+    accountName = currentCommunity?.name;
+    settingURI = "/profile/setting/community";
   }
+
   return (
     <div className={style.header}>
       <div className={style.icons}>
@@ -50,31 +68,33 @@ export const Menubar = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className={style.avatar}>
-              <AvatarImage src={userIcon} />
+              <AvatarImage src={accountIcon} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>{currentUser?.name}</DropdownMenuLabel>
+            <DropdownMenuLabel>{accountName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {/*<DropdownMenuGroup>*/}
             <DropdownMenuItem asChild>
               <Link href="/profile">
                 <User />
                 <span>Profile</span>
               </Link>
-              {/*<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>*/}
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/profile/setting/user">
+              <Link href={settingURI}>
                 <Settings />
                 <span>setting</span>
               </Link>
-              {/*<DropdownMenuShortcut>⌘B</DropdownMenuShortcut>*/}
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/signout">
+                <LogOut />
+                <span>signout</span>
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        {/*</a>*/}
         <a href="/invite" className={style.icon}>
           <Invite size={60} />
           <span className={style.badge}>{inviteNum}</span>

@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Community } from "@/domain/community";
-import { statusAtom } from "@/domain/general";
+import { Community, communityAtom } from "@/domain/community";
+import { accountTypeAtom } from "@/domain/general";
 import { LoginForm, LoginFormSchema, User, userAtom } from "@/domain/user";
 import { apiClient } from "@/utils/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,6 +31,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import react, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import style from "./style.module.scss";
 
@@ -41,8 +42,8 @@ type LoginCardProps = {
 
 export const SignInDialog = (props: LoginCardProps) => {
   const [currentUser, setCurrentUser] = useAtom(userAtom);
-  const [currentCommunity, setCurrentCommunity] = useState<Community | null>();
-  const [currentStatus, setCurrentStatus] = useAtom(statusAtom);
+  const [currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
+  const [currentAccountType, setCurrentAccountType] = useAtom(accountTypeAtom);
   const router = useRouter();
 
   react.useEffect(() => {
@@ -62,13 +63,14 @@ export const SignInDialog = (props: LoginCardProps) => {
     get_base_url = "/user";
     signin_url = "/user/signin";
     signup_url = "/signup/user";
-    link = "/login/community";
+    link = "/signin/community";
   } else if (props.type === "community") {
     title = "イベント・サークル運営者ログイン";
     alternative = "利用者の方はこちら";
+    get_base_url = "/community";
     signin_url = "/community/signin";
     signup_url = "/signup/community";
-    link = "/login/user";
+    link = "/signin/user";
   }
 
   const form = useForm<z.infer<typeof LoginFormSchema>>({
@@ -85,32 +87,32 @@ export const SignInDialog = (props: LoginCardProps) => {
       const signInResponse = await apiClient.post(signin_url, data);
 
       if (props.type === "user") {
-        setCurrentStatus("user");
+        setCurrentAccountType("user");
         const uuid = signInResponse.data.uuid;
         const response = await apiClient.get(`${get_base_url}/${uuid}`);
         console.log(response);
         const user: User = {
           uuid: response.data.user.uuid,
           name: response.data.user.name,
-          // email: response.data.user.email,
           img: response.data.user.img,
-          // self: response.data.user.self,
-          // tags: response.data.user.tagss,
-          // mem1: response.data.user.mem1,
-          // mem2: response.data.user.mem2,
-          // mem3: response.data.user.mem3,
         };
         setCurrentUser(user);
       } else if (props.type === "community") {
+        setCurrentAccountType("community");
+        const uuid = signInResponse.data.uuid;
         const response = await apiClient.get(`${get_base_url}/${uuid}`);
-        // const community: Community = {
-        //   uuid: response.data.uuid,
-        // };
-        // setCurrentCommunity(community);
-        setCurrentStatus("community");
+        console.log(response);
+        const community: Community = {
+          uuid: response.data.uuid,
+          name: response.data.name,
+          img: response.data.img,
+        };
+        setCurrentCommunity(community);
+        // setCurrentStatus("community");
       }
 
       router.push("/event");
+      toast("サインインしました。");
     } catch (err) {
       console.error(err);
     }

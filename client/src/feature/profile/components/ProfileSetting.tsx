@@ -18,6 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CircleChevronRight } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Community, communityAtom } from "@/domain/community";
 import { User, userAtom } from "@/domain/user";
 import { uploadImageToS3 } from "@/lib/utils";
 import { apiClient } from "@/utils/client";
@@ -54,13 +55,14 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
   }
 
   const [currentUser, setCurrentUser] = useAtom(userAtom);
+  const [currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
   const [preview, setPreview] = React.useState("");
   const router = useRouter();
 
   const form = useForm<z.infer<typeof profileFormShema>>({
     resolver: zodResolver(profileFormShema),
     defaultValues: {
-      name: currentUser?.name || "",
+      name: "",
       mem1: "",
       mem2: "",
       mem3: "",
@@ -80,8 +82,8 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
       }
     }
   };
-  const onSubmit = async (data: z.infer<typeof profileFormShema>) => {
-    if (currentUser?.uuid !== "") {
+  const onSubmit = async (data: z.infer<typeof profileFormShema>): Promise<void> => {
+    if (props.type === "user" && currentUser?.uuid !== "") {
       const user: User = {
         uuid: currentUser?.uuid,
         name: data?.name,
@@ -92,9 +94,9 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
         img: data?.img,
         email: data?.email,
       };
-      // console.log("user:", user);
       await apiClient.put(`/user/${currentUser?.uuid}`, user);
 
+      //扱うのはuuidとnameとimgのみ
       const setUser: User = {
         uuid: currentUser?.uuid,
         name: data?.name,
@@ -102,15 +104,35 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
       };
       setCurrentUser(setUser);
       router.push("/event");
-    } else {
-      router.push("user/signin");
+    } else if (props.type === "community" && currentCommunity?.uuid !== "") {
+      const community: Community = {
+        uuid: currentCommunity?.uuid,
+        name: data?.name,
+        mem1: data?.mem1,
+        mem2: data?.mem2,
+        mem3: data?.mem3,
+        self: data?.self,
+        img: data?.img,
+        email: data?.email,
+      };
+      await apiClient.put(`/community/${currentCommunity?.uuid}`, community);
+      console.log(community);
+
+      //扱うのはuuidとnameとimgのみ
+      const setCommunity: Community = {
+        uuid: currentCommunity?.uuid,
+        name: data?.name,
+        img: data?.img,
+      };
+      setCurrentCommunity(setCommunity);
+      router.push("/event");
     }
   };
 
   React.useEffect(() => {
-    if (currentUser?.uuid) {
+    if (props.type === "user" && currentUser?.uuid) {
       apiClient.get(`/user/${currentUser?.uuid}`).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         form.reset({
           name: res.data.user.name,
           mem1: res.data.user.mem1,
@@ -122,17 +144,29 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
         });
         setPreview(res.data.user.img);
       });
-    } else {
-      router.push("/signin/user");
+    } else if (props.type === "community" && currentCommunity?.uuid) {
+      apiClient.get(`/community/${currentCommunity?.uuid}`).then(res => {
+        // console.log(res.data);
+        form.reset({
+          name: res.data.name,
+          mem1: res.data.mem1,
+          mem2: res.data.mem2,
+          mem3: res.data.mem3,
+          img: res.data.img,
+          email: res.data.email,
+          self: res.data.self,
+        });
+        setPreview(res.data.img);
+      });
     }
-  }, [currentUser, router, form]);
+  }, [currentUser, currentCommunity, props.type, form]);
 
   return (
     <Card className={style.card}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardHeader>
-            <CardTitle className={style.mobo}>プロフィール編集</CardTitle>
+            <CardTitle className={style.mobo}>{name}編集</CardTitle>
           </CardHeader>
           <CardContent>
             <FormField
