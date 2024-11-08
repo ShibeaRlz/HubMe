@@ -26,6 +26,11 @@ user_byUUID:
     operationId: UserFindByID
     parameters:
       - $ref: "../components/user.yml#/UserUUIDRequest"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "../components/user.yml#/UserWithoutPassword"
     responses:
       200:
         description: "Successfully get user data"
