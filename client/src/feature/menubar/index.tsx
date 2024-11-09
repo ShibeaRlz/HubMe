@@ -51,8 +51,6 @@ export const Menubar = () => {
   const [currentUser, setCurrentUser] = useAtom(userAtom);
   const [currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
 
-  const router = useRouter();
-
   if (currentAccountType === "user") {
     if (currentUser?.img) {
       accountIcon = currentUser?.img;
@@ -77,7 +75,6 @@ export const Menubar = () => {
   return (
     <div className={style.header}>
       <div className={style.icons}>
-        {/*<a href="/profile/setting/user" className={style.icon}>*/}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className={style.avatar}>
