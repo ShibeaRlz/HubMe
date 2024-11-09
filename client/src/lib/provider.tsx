@@ -1,6 +1,6 @@
 "use client";
-import { Community } from "@/domain/community";
-import { statusAtom } from "@/domain/general";
+import { Community, communityAtom } from "@/domain/community";
+import { accountTypeAtom, statusAtom } from "@/domain/general";
 import { User, userAtom } from "@/domain/user";
 import { apiClient } from "@/utils/client";
 import { useAtom } from "jotai/index";
@@ -9,17 +9,17 @@ import React, { useState } from "react";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useAtom(userAtom);
-  const [currentCommunity, setCurrentCommunity] = useState<Community | null>(null);
-  const [currentStatus] = useAtom(statusAtom);
+  const [currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
+  const [currentAccountType] = useAtom(accountTypeAtom);
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!currentStatus || (currentStatus === "user" && !currentUser)) {
+    if (!currentAccountType || (currentAccountType === "user" && !currentUser)) {
       router.push("/signin/user");
-    } else if (currentStatus === "community" && !currentCommunity) {
+    } else if (currentAccountType === "community" && !currentCommunity) {
       router.push("/signin/community");
     }
-  }, [currentStatus, currentUser, currentCommunity, router]);
+  }, [currentAccountType, currentUser, currentCommunity, router]);
 
   return <>{children}</>;
 }

@@ -5,11 +5,15 @@ info:
 servers:
   - url: "http://localhost:8080"
 paths:
-  /user:
-    $ref: "./paths/auth.yml#/user"
   /user/{uuid}:
-    $ref: "./paths/auth.yml#/user_byUUID"
+    $ref: "./paths/user.yml#/user_byUUID"
   /user/signup:
     $ref: "./paths/auth.yml#/user_signup"
   /user/signin:
     $ref: "./paths/auth.yml#/user_signin"
+  /community/{uuid}:
+    $ref: "./paths/community.yml#/community_byUUID"
+  /community/signup:
+    $ref: "./paths/auth.yml#/community_signup"
+  /community/signin:
+    $ref: "./paths/auth.yml#/community_signin"

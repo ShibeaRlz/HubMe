@@ -2,8 +2,8 @@ import { atom } from "jotai/index";
 import { Atom } from "lucide-react";
 import { z } from "zod";
 
-export const statusSchema = z.enum(["user", "community"]);
+export const accountTypeSchema = z.enum(["not", "user", "community"]);
 
-export type Status = z.infer<typeof statusSchema>;
+export type AccountType = z.infer<typeof accountTypeSchema>;
 
-export const statusAtom = atom<Status | null>(null);
+export const accountTypeAtom = atom<AccountType>("not");
