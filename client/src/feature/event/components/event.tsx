@@ -25,7 +25,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Textarea } from "@/components/ui/textarea";
 import { communityAtom } from "@/domain/community";
 import { accountTypeAtom } from "@/domain/general";
-import { cn } from "@/lib/utils";
+import { cn, uploadImageToS3 } from "@/lib/utils";
 import { apiClient } from "@/utils/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -91,7 +91,7 @@ export const EventSetting = () => {
 
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof EventSettingSchema>>({
+  const form = useForm<EventSettingRequest>({
     resolver: zodResolver(EventSettingSchema),
     defaultValues: {
       community_uuid: currentCommunity?.uuid,
@@ -103,7 +103,18 @@ export const EventSetting = () => {
     },
   });
 
-  const onSubmit = async (event: z.infer<typeof EventSettingSchema>): Promise<void> => {
+  const onImgChange = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const imgFile = event.target.files?.[0];
+    if (imgFile) {
+      const imgURL = await uploadImageToS3(imgFile);
+      if (imgURL) {
+        form.setValue("img", imgURL);
+        toast("イメージをアップロードしました");
+      }
+    }
+  };
+
+  const onSubmit = async (event: EventSettingRequest): Promise<void> => {
     apiClient.post("/createdevent", event).then(() => {
       router.push("/event");
       toast("イベントを作成しました");
@@ -138,11 +149,17 @@ export const EventSetting = () => {
           <FormField
             control={form.control}
             name="img"
-            render={({ field }) => (
+            render={({ field: { onChange, value, ...field } }) => (
               <FormItem className={style.form}>
                 <FormLabel className={style.label}>画像</FormLabel>
                 <FormControl>
-                  <Input type="file" placeholder="Text" {...field} className={style.form} />
+                  <Input
+                    type="file"
+                    placeholder="Text"
+                    onChange={onImgChange}
+                    {...field}
+                    className={style.form}
+                  />
                 </FormControl>
                 <FormMessage className={style.errorMessage} />
               </FormItem>
