@@ -1,6 +1,7 @@
 "use client";
 import Invite from "@/../public/invite";
 import Logo from "@/../public/logo";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +19,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useAtom } from "jotai/index";
 import { CreditCard, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { MailIcon } from "./components/mail";
 import Search from "./components/search";
 import style from "./index.module.scss";
@@ -44,8 +48,10 @@ export const Menubar = () => {
   let accountIcon = "https://github.com/shadcn.png";
   let settingURI = "";
   const [currentAccountType, setCurrentAccountType] = useAtom(accountTypeAtom);
-  const [currentUser] = useAtom(userAtom);
-  const [currentCommunity] = useAtom(communityAtom);
+  const [currentUser, setCurrentUser] = useAtom(userAtom);
+  const [currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
+
+  const router = useRouter();
 
   if (currentAccountType === "user") {
     if (currentUser?.img) {
@@ -60,6 +66,13 @@ export const Menubar = () => {
     accountName = currentCommunity?.name;
     settingURI = "/profile/setting/community";
   }
+
+  const onClickSignout = () => {
+    setCurrentUser(undefined);
+    setCurrentCommunity(undefined);
+    setCurrentAccountType("not");
+    toast("サインアウトしました");
+  };
 
   return (
     <div className={style.header}>
@@ -88,7 +101,7 @@ export const Menubar = () => {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/signout">
+              <Link href="/signin/user" onClick={onClickSignout}>
                 <LogOut />
                 <span>signout</span>
               </Link>

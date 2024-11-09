@@ -82,8 +82,9 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
       }
     }
   };
+
   const onSubmit = async (data: z.infer<typeof profileFormShema>): Promise<void> => {
-    if (props.type === "user" && currentUser?.uuid !== "") {
+    if (props.type === "user" && currentUser?.uuid !== undefined) {
       const user: User = {
         uuid: currentUser?.uuid,
         name: data?.name,
