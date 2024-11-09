@@ -32,6 +32,7 @@ import { format } from "date-fns";
 import { useAtom } from "jotai/index";
 import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { yellow } from "next/dist/lib/picocolors";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
@@ -88,6 +89,7 @@ export type EventSettingRequest = z.infer<typeof EventSettingSchema>;
 export const EventSetting = () => {
   const [currentCommunity] = useAtom(communityAtom);
   const [currentAccountType] = useAtom(accountTypeAtom);
+  const [previewImg, setPreviewImg] = React.useState("");
 
   const router = useRouter();
 
@@ -110,6 +112,7 @@ export const EventSetting = () => {
       if (imgURL) {
         form.setValue("img", imgURL);
         toast("イメージをアップロードしました");
+        setPreviewImg(imgURL);
       }
     }
   };
@@ -146,6 +149,7 @@ export const EventSetting = () => {
             )}
           />
           <br />
+
           <FormField
             control={form.control}
             name="img"
@@ -165,6 +169,16 @@ export const EventSetting = () => {
               </FormItem>
             )}
           />
+          <div>
+            {previewImg ? (
+              <img src={previewImg} alt="" className={style.img} />
+            ) : (
+              <div>
+                {/*空やばいので修正要*/}
+                <img src={""} alt="" />
+              </div>
+            )}
+          </div>
           <br />
 
           <FormField
