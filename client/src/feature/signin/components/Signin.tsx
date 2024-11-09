@@ -58,7 +58,7 @@ export const SignInDialog = (props: LoginCardProps) => {
   let signup_url = "";
   let link = "";
   if (props.type === "user") {
-    title = "利用者ログイン";
+    title = "ユーザーログイン";
     alternative = "イベント・サークル運営者の方はこちら";
     get_base_url = "/user";
     signin_url = "/user/signin";
@@ -66,7 +66,7 @@ export const SignInDialog = (props: LoginCardProps) => {
     link = "/signin/community";
   } else if (props.type === "community") {
     title = "イベント・サークル運営者ログイン";
-    alternative = "利用者の方はこちら";
+    alternative = "ユーザーの方はこちら";
     get_base_url = "/community";
     signin_url = "/community/signin";
     signup_url = "/signup/community";
@@ -108,7 +108,6 @@ export const SignInDialog = (props: LoginCardProps) => {
           img: response.data.img,
         };
         setCurrentCommunity(community);
-        // setCurrentStatus("community");
       }
 
       router.push("/event");
@@ -157,6 +156,7 @@ export const SignInDialog = (props: LoginCardProps) => {
                     <FormLabel>パスワード</FormLabel>
                     <FormControl>
                       <Input
+                        type="password"
                         placeholder="パスワードを入力してください"
                         {...field}
                         className={style.input}

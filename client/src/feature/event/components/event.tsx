@@ -23,13 +23,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
-import { createEvent } from "@/feature/event/hooks/event";
+import { communityAtom } from "@/domain/community";
+import { accountTypeAtom } from "@/domain/general";
 import { cn } from "@/lib/utils";
+import { apiClient } from "@/utils/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
+import { useAtom } from "jotai/index";
 import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { yellow } from "next/dist/lib/picocolors";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import style from "./style.module.scss";
 
@@ -79,11 +85,16 @@ export const EventSettingSchema = z.object({
 
 export type EventSettingRequest = z.infer<typeof EventSettingSchema>;
 
-export const DatePickerField = () => {
+export const EventSetting = () => {
+  const [currentCommunity] = useAtom(communityAtom);
+  const [currentAccountType] = useAtom(accountTypeAtom);
+
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof EventSettingSchema>>({
     resolver: zodResolver(EventSettingSchema),
     defaultValues: {
-      community_uuid: "eae7583a-77d3-422a-8399-1f3f9b0d7d08",
+      community_uuid: currentCommunity?.uuid,
       title: "",
       img: "",
       date: undefined,
@@ -92,11 +103,18 @@ export const DatePickerField = () => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof EventSettingSchema>) => {
-    const response = await createEvent(data);
-    console.log(data);
+  const onSubmit = async (event: z.infer<typeof EventSettingSchema>): Promise<void> => {
+    apiClient.post("/createdevent", event).then(() => {
+      router.push("/event");
+      toast("イベントを作成しました");
+    });
   };
 
+  React.useEffect((): void => {
+    if (!currentCommunity?.uuid || currentAccountType === "not" || currentAccountType === "user") {
+      router.push("/signin/community");
+    }
+  });
   return (
     <div className={style.all}>
       <h1 className={style.heading}>イベント作成</h1>
@@ -124,7 +142,7 @@ export const DatePickerField = () => {
               <FormItem className={style.form}>
                 <FormLabel className={style.label}>画像</FormLabel>
                 <FormControl>
-                  <Input placeholder="Text" {...field} className={style.form} />
+                  <Input type="file" placeholder="Text" {...field} className={style.form} />
                 </FormControl>
                 <FormMessage className={style.errorMessage} />
               </FormItem>
@@ -141,11 +159,7 @@ export const DatePickerField = () => {
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
-                      <Button
-                        variant="outline"
-                        // role="combobox"
-                        className={style.button}
-                      >
+                      <Button variant="outline" className={style.button}>
                         {field.value?.length > 0
                           ? `${field.value.length}個のタグを選択中`
                           : "タグを選択"}

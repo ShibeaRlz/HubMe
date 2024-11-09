@@ -17,7 +17,7 @@ import { accountTypeAtom } from "@/domain/general";
 import { userAtom } from "@/domain/user";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useAtom } from "jotai/index";
-import { CreditCard, LogOut, Settings, User } from "lucide-react";
+import { Calendar, CreditCard, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -97,6 +97,14 @@ export const Menubar = () => {
                 <span>setting</span>
               </Link>
             </DropdownMenuItem>
+            {currentAccountType === "community" && (
+              <DropdownMenuItem asChild>
+                <Link href="/event/setting">
+                  <Calendar />
+                  イベント設定
+                </Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem asChild>
               <Link href="/signin/user" onClick={onClickSignout}>
                 <LogOut />
