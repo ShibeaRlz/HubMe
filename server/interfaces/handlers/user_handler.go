@@ -59,22 +59,10 @@ func (h *userHandler) FindByID(ctx *gin.Context) {
 
 	user, err := h.userUsecase.FindByID(ctx, request)
 
-	res := gin.H{
-		"uuid":  user.UUID,
-		"name":  user.Name,
-		"email": user.Email,
-		"img":   user.Img,
-		"self":  user.Self,
-		"mem1":  user.Mem1,
-		"mem2":  user.Mem2,
-		"mem3":  user.Mem3,
-		"tags":  user.Tags,
-	}
-
 	if err != nil {
 		fmt.Errorf("failed to get user: %w", err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, res)
+	ctx.JSON(http.StatusOK, user)
 }
