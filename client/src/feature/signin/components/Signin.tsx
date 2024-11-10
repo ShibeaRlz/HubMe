@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Community, communityAtom } from "@/domain/community";
 import { accountTypeAtom } from "@/domain/general";
-import { LoginForm, LoginFormSchema, User, userAtom } from "@/domain/user";
+import { User, userAtom } from "@/domain/user";
 import { apiClient } from "@/utils/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai/index";
@@ -39,6 +39,13 @@ type LoginCardProps = {
   // title: string;
   type: "user" | "community";
 };
+
+const LoginFormSchema = z.object({
+  email: z.string().min(1, { message: "入力必須な項目です。" }),
+  password: z.string().min(1, { message: "入力必須な項目です。" }),
+});
+
+type LoginForm = z.infer<typeof LoginFormSchema>;
 
 export const SignInDialog = (props: LoginCardProps) => {
   const [currentUser, setCurrentUser] = useAtom(userAtom);
@@ -73,7 +80,7 @@ export const SignInDialog = (props: LoginCardProps) => {
     link = "/signin/user";
   }
 
-  const form = useForm<z.infer<typeof LoginFormSchema>>({
+  const form = useForm<LoginForm>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {
       email: "",
@@ -81,10 +88,10 @@ export const SignInDialog = (props: LoginCardProps) => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof LoginFormSchema>) => {
+  const onSubmit = async (loginData: LoginForm) => {
     try {
       // await apiClient.post(api_url, data);
-      const signInResponse = await apiClient.post(signin_url, data);
+      const signInResponse = await apiClient.post(signin_url, loginData);
 
       if (props.type === "user") {
         setCurrentAccountType("user");
