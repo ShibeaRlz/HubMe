@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { SignupFormSchema, User, userAtom } from "@/domain/user";
+import { User, userAtom } from "@/domain/user";
 import { createUser } from "@/feature/signup/hook/signup";
 import { apiClient } from "@/utils/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,8 +30,21 @@ type SignUpProps = {
   type: "user" | "community";
 };
 
+const SignupFormSchema = z.object({
+  name: z.string().min(1, { message: "入力必須な項目です。" }),
+  mem1: z.string().min(1, { message: "入力必須な項目です。" }),
+  mem2: z.string(),
+  mem3: z.string(),
+  img: z.string(),
+  email: z.string().min(1, { message: "入力必須な項目です。" }),
+  password: z.string().min(1, { message: "入力必須な項目です。" }),
+  self: z.string(),
+});
+
+type SignupForm = z.infer<typeof SignupFormSchema>;
+
 export const SignUpDialog = (props: SignUpProps) => {
-  const [currentUser, setCurrentUser] = useAtom<User | null>(userAtom);
+  const [currentUser, setCurrentUser] = useAtom(userAtom);
   const router = useRouter();
 
   let name = "";
@@ -50,7 +63,7 @@ export const SignUpDialog = (props: SignUpProps) => {
     go_url = "/signin/community";
   }
 
-  const form = useForm<z.infer<typeof SignupFormSchema>>({
+  const form = useForm<SignupForm>({
     // resolver: zodResolver(SignupFormSchema),
     defaultValues: {
       name: "",
@@ -63,9 +76,9 @@ export const SignUpDialog = (props: SignUpProps) => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof SignupFormSchema>) => {
+  const onSubmit = async (signupData: SignupForm) => {
     try {
-      await apiClient.post(api_url, data);
+      await apiClient.post(api_url, signupData);
       router.push(go_url);
     } catch (error) {
       console.error("Error submitting form:", error);
