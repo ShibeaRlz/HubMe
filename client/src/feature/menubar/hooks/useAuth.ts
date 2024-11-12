@@ -6,7 +6,7 @@ import {apiClient} from "@/utils/client";
 export const useAuth = () => {
     const checkSession = useCallback(async () => {
         try {
-            const res = await apiClient.get("/api/session");
+            const res = await apiClient.get("/session");
             const session = res.data;
             const userData: SessionData = {
                 uuid: session.user_id,
@@ -20,7 +20,16 @@ export const useAuth = () => {
         }
     }, []);
 
+    const signout = useCallback( async () => {
+        try {
+            await apiClient.get("signout")
+        } catch (error) {
+            console.log('Signout failed:', error)
+        }
+    }, []);
+
     return {
         checkSession,
+        signout
     };
 };

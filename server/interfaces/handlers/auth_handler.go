@@ -18,6 +18,7 @@ type authUserHandler struct {
 type IAuthHandler interface {
 	SignUp(ctx *gin.Context)
 	SignIn(ctx *gin.Context)
+	SignOut(ctx *gin.Context)
 	CheckSession(ctx *gin.Context)
 }
 
@@ -87,6 +88,30 @@ func (h *authUserHandler) SignIn(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "login in successful", "uuid": uuid})
+}
+
+func (h *authUserHandler) SignOut(ctx *gin.Context) {
+	fmt.Println("logoutHandler")
+	// セッションを取得
+	session, err := h.store.Get(ctx.Request, "session-name")
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Session error"})
+		return
+	}
+
+	// セッションの値をクリア
+	session.Values = make(map[interface{}]interface{})
+
+	// セッションの有効期限を0に設定して、すぐに無効化
+	session.Options.MaxAge = -1
+
+	// セッションを保存（これで削除が確定する）
+	if err := session.Save(ctx.Request, ctx.Writer); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to clear session"})
+		return
+	}
+
+	fmt.Printf("logout: %v\n", session.Values) // フォーマットを修正
 }
 
 func (h *authUserHandler) CheckSession(c *gin.Context) {

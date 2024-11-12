@@ -77,7 +77,9 @@ func main() {
 
 	router.POST("/api/user/signin", authUserHandler.SignIn)
 	router.POST("/api/user/signup", authUserHandler.SignUp)
+
 	router.GET("/api/session", authUserHandler.CheckSession)
+	router.GET("/api/signout", authUserHandler.SignOut)
 
 	router.GET("/api/user/:uuid", userHandler.FindByID)
 	router.PUT("/api/user/:uuid", userHandler.Update)

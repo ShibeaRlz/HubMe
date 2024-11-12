@@ -26,7 +26,7 @@ import { toast } from "sonner";
 import { MailIcon } from "./components/mail";
 import Search from "./components/search";
 import style from "./index.module.scss";
-import {useAuth} from "@/feature/menubar/hooks/checksession";
+import {useAuth} from "@/feature/menubar/hooks/useAuth";
 
 const mockData = [
   { label: "東京大学" },
@@ -48,7 +48,7 @@ export const Menubar = () => {
   let accountName = "";
   let accountIcon = "https://github.com/shadcn.png";
   let settingURI = "";
-  const {checkSession } = useAuth();
+  const {checkSession ,signout} = useAuth();
   useEffect(() => {
     checkSession();
   }, [checkSession]);
@@ -72,6 +72,7 @@ export const Menubar = () => {
   }
 
   const onClickSignout = () => {
+    signout();
     setCurrentUser(undefined);
     setCurrentCommunity(undefined);
     setCurrentAccountType("not");
@@ -112,10 +113,10 @@ export const Menubar = () => {
               </DropdownMenuItem>
             )}
             <DropdownMenuItem asChild>
-              <Link href="/signin/user" onClick={onClickSignout}>
+              <button onClick={onClickSignout}>
                 <LogOut />
                 <span>signout</span>
-              </Link>
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
