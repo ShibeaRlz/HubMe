@@ -70,7 +70,6 @@ HubMeには、プラットフォーム内で直接やり取りができるメッ
 * shadcn
 * lucide icon
 * Axios
-* デプロイ先（AWS S3/CloudFront)
 
 #### インフラ構成
 <img width="1363" alt="スクリーンショット 2024-11-12 17 30 11" src="https://github.com/user-attachments/assets/b005997f-5104-482b-ab7a-595865577c06">
