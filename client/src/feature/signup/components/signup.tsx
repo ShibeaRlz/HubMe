@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { User, userAtom } from "@/domain/user";
-import { createUser } from "@/feature/signup/hook/signup";
 import { apiClient } from "@/utils/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai/index";

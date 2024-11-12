@@ -101,6 +101,7 @@ export const SignInDialog = (props: LoginCardProps) => {
         const user: User = {
           uuid: response.data.uuid,
           name: response.data.name,
+          email: response.data.email,
           img: response.data.img,
         };
         setCurrentUser(user);
@@ -112,6 +113,7 @@ export const SignInDialog = (props: LoginCardProps) => {
         const community: Community = {
           uuid: response.data.uuid,
           name: response.data.name,
+          email: response.data.email,
           img: response.data.img,
         };
         setCurrentCommunity(community);

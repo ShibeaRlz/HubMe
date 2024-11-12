@@ -61,13 +61,13 @@ export const Menubar = () => {
     if (currentUser?.img) {
       accountIcon = currentUser?.img;
     }
-    accountName = currentUser?.name;
+    accountName = currentUser?.name || "";
     settingURI = "/profile/setting/user";
   } else {
     if (currentCommunity?.img) {
       accountIcon = currentCommunity?.img;
     }
-    accountName = currentCommunity?.name;
+    accountName = currentCommunity?.name || "";
     settingURI = "/profile/setting/community";
   }
 

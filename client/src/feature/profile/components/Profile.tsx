@@ -29,7 +29,7 @@ export const ProfileCard = () => {
   const [currentUser] = useAtom(userAtom);
   const [currentCommunity] = useAtom(communityAtom);
   const [currentAccountType] = useAtom(accountTypeAtom);
-  const [currentProfile, setCurrentProfile] = React.useState<Profile>(undefined);
+  const [currentProfile, setCurrentProfile] = React.useState<Profile>();
   const router = useRouter();
   let settingURI = "";
 

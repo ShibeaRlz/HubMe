@@ -101,13 +101,14 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
       const setUser: User = {
         uuid: currentUser?.uuid,
         name: data?.name,
+        email: data?.email,
         img: data?.img,
       };
       setCurrentUser(setUser);
       router.push("/event");
     } else if (props.type === "community" && currentCommunity?.uuid !== "") {
       const community: Community = {
-        uuid: currentCommunity?.uuid,
+        uuid: currentCommunity?.uuid || "",
         name: data?.name,
         mem1: data?.mem1,
         mem2: data?.mem2,
@@ -121,8 +122,9 @@ export const ProfileSetting = (props: PrpfileSettingProps) => {
 
       //扱うのはuuidとnameとimgのみ
       const setCommunity: Community = {
-        uuid: currentCommunity?.uuid,
+        uuid: currentCommunity?.uuid || "",
         name: data?.name,
+        email: data?.email,
         img: data?.img,
       };
       setCurrentCommunity(setCommunity);
