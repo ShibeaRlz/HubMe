@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/gorilla/sessions"
 	"github.com/jphacks/os_2403/usecase"
 	"net/http"
@@ -16,6 +18,7 @@ type authUserHandler struct {
 type IAuthHandler interface {
 	SignUp(ctx *gin.Context)
 	SignIn(ctx *gin.Context)
+	CheckSession(ctx *gin.Context)
 }
 
 type (
@@ -38,33 +41,34 @@ func (h *authUserHandler) SignUp(ctx *gin.Context) {
 	}
 
 	// SignInメソッドを呼び出す
-	if err := h.authUsecase.SignUp(ctx, request); err != nil {
+	uuid, err := h.authUsecase.SignUp(ctx, request)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	//// セッションの取得
-	//session, err := h.store.Get(ctx.Request, "session-name")
-	//if err != nil {
-	//	ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Session error"})
-	//	return
-	//}
-	//
-	//// セッションの設定を調整
-	//session.Options = &sessions.Options{
-	//	Path:     "/",
-	//	MaxAge:   100 * 1, // セッションの有効期限（適宜調整）
-	//	HttpOnly: true,
-	//	Secure:   true, // HTTPSが有効な環境で使用
-	//	SameSite: http.SameSiteNoneMode,
-	//}
+	// セッションの取得
+	session, err := h.store.Get(ctx.Request, "session-name")
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Session error"})
+		return
+	}
 
-	//if err := session.Save(ctx.Request, ctx.Writer); err != nil {
-	//	ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
-	//	return
-	//}
+	session.Values["user_id"] = uuid // ユーザーIDを保存
+	session.Values["account_type"] = "user"
+	// セッションの設定を調整
+	session.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge:   3600 * 24, // セッションの有効期限（適宜調整）
+		HttpOnly: true,
+		Secure:   true, // HTTPSが有効な環境で使用
+		SameSite: http.SameSiteNoneMode,
+	}
 
-	//h.sessionsUsecase.SignIn(ctx, )
+	if err := session.Save(ctx.Request, ctx.Writer); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+		return
+	}
 
 	ctx.JSON(http.StatusCreated, gin.H{"message": "sign in successful"})
 }
@@ -76,11 +80,6 @@ func (h *authUserHandler) SignIn(ctx *gin.Context) {
 		return
 	}
 
-	// SignInメソッドを呼び出す
-	//if err := h.authUsecase.SignIn(ctx, request); err != nil {
-	//	ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	//	return
-	//}
 	uuid, err := h.authUsecase.SignIn(ctx, request)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -88,4 +87,33 @@ func (h *authUserHandler) SignIn(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "login in successful", "uuid": uuid})
+}
+
+func (h *authUserHandler) CheckSession(c *gin.Context) {
+	fmt.Println("check session request")
+	fmt.Println(c.Request)
+	session, err := h.store.Get(c.Request, "session-name")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Session error"})
+		return
+	}
+
+	fmt.Printf("session: %+v\\n", session)
+	fmt.Printf("session.Values keys: %+v\\n", session.Values["user_id"])
+
+	if auth, ok := session.Values["user_id"].(uuid.UUID); !ok || auth.String() == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	// ユーザー情報をレスポンスとして返す
+	response := map[string]interface{}{
+		"user_id":      session.Values["user_id"],
+		"account_type": session.Values["account_type"],
+		"status":       "authenticated",
+	}
+
+	fmt.Println("respons: %+v\n", response)
+
+	c.JSON(http.StatusOK, response)
 }

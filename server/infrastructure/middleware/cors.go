@@ -12,6 +12,7 @@ func CORS() gin.HandlerFunc {
 		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS")
 		c.Header("Access-Control-Allow-Headers", "Content-Type, Accept")
 		c.Header("Access-Control-Allow-Credentials", "true")
+		c.Header("Access-Control-Expose-Headers", "Set-Cookie")
 		c.Header("Access-Control-Max-Age", "100")
 
 		if c.Request.Method == http.MethodOptions {
