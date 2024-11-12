@@ -1,0 +1,137 @@
+@use "@/styles/theme";
+
+.tag_button {
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-width: 2px;
+  border-radius: 9999px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-property: color, background-color, border-color;
+  font-family: 'Calibri';
+}
+
+.small {
+  min-width: 4rem;
+  padding: 0.1rem 0.75rem;
+}
+
+.medium {
+  min-width: 6rem;
+  padding: 0.1rem 1rem;
+}
+
+.large {
+  min-width: 8rem;
+  padding: 0.1rem 1.5rem;
+}
+
+.card_tag {
+  height: 20px;
+  overflow: hidden;
+  font-size: 0.675rem;
+  font-weight: 500;
+  line-height: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-width: 1px;
+  border-radius: 9999px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-property: color, background-color, border-color;
+}
+
+.cardSmall {
+  min-width: 3rem;
+  padding: 0 0.5rem;
+}
+
+.cardMedium {
+  min-width: 4.5rem;
+  padding: 0 0.75rem;
+}
+
+.cardLarge {
+  min-width: 6rem;
+  padding: 0 1rem;
+}
+
+.red {
+  color: theme.$red;
+  border-color: theme.$red;
+
+  &:hover {
+    color: theme.$red;
+    background-color: rgb(254 226 226);
+  }
+
+  &.active {
+    color: rgb(255 255 255);
+    background-color: theme.$red;
+
+    &:hover {
+      background-color: rgb(127 29 29);
+    }
+  }
+}
+
+.blue {
+  color: rgb(30 64 175);
+  border-color: rgb(30 64 175);
+
+  &:hover {
+    color: rgb(30 64 175);
+    background-color: rgb(219 234 254);
+  }
+
+  &.active {
+    color: rgb(255 255 255);
+    background-color: rgb(30 64 175);
+
+    &:hover {
+      background-color: rgb(30 58 138);
+    }
+  }
+}
+
+.green {
+  color: rgb(22 101 52);
+  border-color: rgb(22 101 52);
+
+  &:hover {
+    color: rgb(22 101 52);
+    background-color: rgb(220 252 231);
+  }
+
+  &.active {
+    color: rgb(255 255 255);
+    background-color: rgb(22 101 52);
+
+    &:hover {
+      background-color: rgb(20 83 45);
+    }
+  }
+}
+
+.gray {
+  color: rgb(31 41 55);
+  border-color: rgb(31 41 55);
+
+  &:hover {
+    color: rgb(31 41 55);
+    background-color: rgb(243 244 246);
+  }
+
+  &.active {
+    color: rgb(255 255 255);
+    background-color: rgb(31 41 55);
+
+    &:hover {
+      background-color: rgb(17 24 39);
+    }
+  }
+}
