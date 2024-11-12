@@ -87,6 +87,29 @@ func (h *authUserHandler) SignIn(ctx *gin.Context) {
 		return
 	}
 
+	// セッションの取得
+	session, err := h.store.Get(ctx.Request, "session-name")
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Session error"})
+		return
+	}
+
+	session.Values["user_id"] = uuid // ユーザーIDを保存
+	session.Values["account_type"] = "user"
+	// セッションの設定を調整
+	session.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge:   3600 * 24, // セッションの有効期限（適宜調整）
+		HttpOnly: true,
+		Secure:   true, // HTTPSが有効な環境で使用
+		SameSite: http.SameSiteNoneMode,
+	}
+
+	if err := session.Save(ctx.Request, ctx.Writer); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+		return
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{"message": "login in successful", "uuid": uuid})
 }
 
