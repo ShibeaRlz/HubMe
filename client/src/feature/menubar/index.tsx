@@ -20,12 +20,13 @@ import { useAtom } from "jotai/index";
 import { Calendar, CreditCard, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, {useEffect} from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { MailIcon } from "./components/mail";
 import Search from "./components/search";
 import style from "./index.module.scss";
+import {useAuth} from "@/feature/menubar/hooks/useAuth";
 
 const mockData = [
   { label: "東京大学" },
@@ -47,6 +48,11 @@ export const Menubar = () => {
   let accountName = "";
   let accountIcon = "https://github.com/shadcn.png";
   let settingURI = "";
+  const {checkSession ,signout} = useAuth();
+  useEffect(() => {
+    checkSession();
+  }, [checkSession]);
+
   const [currentAccountType, setCurrentAccountType] = useAtom(accountTypeAtom);
   const [currentUser, setCurrentUser] = useAtom(userAtom);
   const [currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
@@ -66,6 +72,7 @@ export const Menubar = () => {
   }
 
   const onClickSignout = () => {
+    signout();
     setCurrentUser(undefined);
     setCurrentCommunity(undefined);
     setCurrentAccountType("not");
@@ -106,10 +113,10 @@ export const Menubar = () => {
               </DropdownMenuItem>
             )}
             <DropdownMenuItem asChild>
-              <Link href="/signin/user" onClick={onClickSignout}>
+              <button onClick={onClickSignout}>
                 <LogOut />
                 <span>signout</span>
-              </Link>
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
