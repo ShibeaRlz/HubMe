@@ -3,11 +3,11 @@
 import CardTag from "@/components/tags/card-tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { TagType } from "@/domain/tag";
 import { Heart, SquareX } from "lucide-react";
 import type { ReactElement } from "react";
 import { useState } from "react";
 import style from "./style.module.scss";
-import { TagType } from "@/domain/tag";
 
 type EventCardProps = {
   title: string;
@@ -18,7 +18,7 @@ type EventCardProps = {
   imageUrl: string;
   liked?: boolean;
   handleEventClose: () => void;
-}
+};
 
 export function EventCard({
   title,
@@ -28,7 +28,7 @@ export function EventCard({
   tags,
   imageUrl = "https://github.com/shadcn.png",
   liked = false,
-  handleEventClose
+  handleEventClose,
 }: EventCardProps): ReactElement {
   const [isLiked, setIsLiked] = useState(liked);
 
