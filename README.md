@@ -73,8 +73,9 @@ HubMeには、プラットフォーム内で直接やり取りができるメッ
 
 #### インフラ構成
 <img width="1363" alt="スクリーンショット 2024-11-12 17 30 11" src="https://github.com/user-attachments/assets/b005997f-5104-482b-ab7a-595865577c06">
-* デプロイ先（AWSECSFargate)
-* ホスティング先(AWSCloudFront/S3)
+
+* デプロイ先（AWSCloudFront/AWSECSFargate)
+* ホスティング先(AWSCloudFront/Amazon S3)
 * ドメイン取得（お名前.com）
 
 #### デバイス
