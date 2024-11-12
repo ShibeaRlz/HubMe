@@ -1,12 +1,12 @@
 "use client";
 
+import { TagType } from "@/domain/tag";
 import { Ellipsis, SquareX } from "lucide-react";
 import React, { useState } from "react";
 import InviteForYou from "../../../public/invite-for-you";
 import Letter from "../../../public/letter";
 import { EventCard } from "../event";
 import style from "./index.module.scss";
-import { TagType } from "@/domain/tag";
 
 type CardType = {
   title: string;
@@ -16,7 +16,7 @@ type CardType = {
   tags: TagType[];
   imageUrl: string;
   liked?: boolean;
-}
+};
 
 interface PopupProps {
   cards: CardType[];

@@ -17,8 +17,7 @@ export const UserSchema = z.object({
 export type User = z.infer<typeof UserSchema>;
 export const userAtom = atom<User>();
 
-
 export type SessionData = {
   uuid: string;
   email: string;
-}
+};
