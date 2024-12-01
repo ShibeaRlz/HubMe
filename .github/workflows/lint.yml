@@ -1,0 +1,39 @@
+name: lint
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+    branches:
+      - develop
+
+jobs:
+  lint:
+    name: lint
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4.2.2
+      - name: set up node
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: "20"
+      - name: install stylelint
+        working-directory: client
+        run: npm install stylelint stylelint-config-standard-scss --legacy-peer-deps
+      - name: lint
+        working-directory: client
+        run: make lint
+        continue-on-error: true
+      - name: fix lint
+        uses: dev-hato/actions-diff-pr-management@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          branch-name-prefix: 'fix-lint'
