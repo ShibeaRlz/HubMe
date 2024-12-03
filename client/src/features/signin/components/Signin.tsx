@@ -62,11 +62,6 @@ export const SignInDialog = (props: LoginCardProps) => {
   let signin_url = "";
   let signup_url = "";
   let link = "";
-  // const baseURI = useSetBaseAccountType(currentAccountType);
-  // const homeURI = `${baseURI}/home`;
-  // const signin_url = `${get_base_url}/signin`;
-  // const signup_url = `${get_base_url}/signup`;
-  // const link = `${useSetAnotherBaseAccountType(currentAccountType)}/signin`;
   if (props.type === "user") {
     title = "ユーザーログイン";
     alternative = "イベント・サークル運営者の方はこちら";
