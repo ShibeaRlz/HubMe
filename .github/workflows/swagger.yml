@@ -25,5 +25,5 @@ jobs:
       - name: fix swagger
         uses: dev-hato/actions-diff-pr-management@v1
         with:
-          github-token: ${{ steps.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           branch-name-prefix: 'fix-swagger'
