@@ -1,4 +1,3 @@
-import { Menubar } from "@/features/menubar";
 import type { Metadata } from "next";
 import "@/styles/globals.scss";
 import { Toaster } from "@/components/ui/sonner";
