@@ -71,7 +71,7 @@ func (h *authUserHandler) SignUp(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"message": "sign in successful"})
+	ctx.JSON(http.StatusCreated, gin.H{"message": "sign up successful"})
 }
 
 func (h *authUserHandler) SignIn(ctx *gin.Context) {

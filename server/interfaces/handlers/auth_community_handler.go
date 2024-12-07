@@ -67,7 +67,7 @@ func (h *communityHandler) SignUp(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"message": "sign in successful"})
+	ctx.JSON(http.StatusOK, gin.H{"message": "sign up successful"})
 }
 
 func (h *communityHandler) SignIn(ctx *gin.Context) {
