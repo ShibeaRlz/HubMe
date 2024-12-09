@@ -1,5 +1,4 @@
 "use client";
-import { Menubar } from "@/features/menubar";
 import InviteCheck from "@/../public/invite-check";
 import LikeSearch from "@/../public/like-search";
 import { getTags } from "@/components/tags/hooks/get-tags";
@@ -8,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { EventCard } from "@/features/event";
 import { getEvents } from "@/features/event/hooks/get-events";
 import { EventType } from "@/features/event/types/event";
+import { Menubar } from "@/features/menubar";
 import { Popup } from "@/features/popup";
 import { TagType } from "@/features/tags/types/tag";
 import { AuthProvider } from "@/lib/provider";

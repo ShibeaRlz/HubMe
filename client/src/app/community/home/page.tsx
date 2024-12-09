@@ -1,5 +1,5 @@
-import { Menubar } from "@/features/menubar";
 import { UserCard } from "@/features/community-home/components/user-card";
+import { Menubar } from "@/features/menubar";
 import { AuthProvider } from "@/lib/provider";
 
 export default function Home() {
