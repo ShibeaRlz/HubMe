@@ -102,12 +102,14 @@ func main() {
 	router.GET("/api/signout", authUserHandler.SignOut)
 
 	router.GET("/api/user/:uuid", userHandler.FindByID)
+	router.GET("/api/users", userHandler.GetAll)
 	router.PUT("/api/user/:uuid", userHandler.Update)
 
 	router.POST("/api/community/signin", authCommunityHandler.SignIn)
 	router.POST("/api/community/signup", authCommunityHandler.SignUp)
 
 	router.GET("/api/community/:uuid", communityHandler.FindById)
+	router.GET("/api/communities", communityHandler.GetAll)
 	router.PUT("/api/community/:uuid", communityHandler.Update)
 
 	router.GET("/api/tag", tagHandler.GetRandom)
