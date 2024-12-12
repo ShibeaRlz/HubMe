@@ -2,9 +2,7 @@
 "use client";
 import { GetCommunityByUUID, GetUserByUUID } from "@/features/account/api";
 import { accountTypeAtom, communityAtom, userAtom } from "@/features/account/stores";
-import { Community } from "@/features/account/types/community";
 import { SessionData } from "@/features/account/types/session";
-import { GetCommunities } from "@/features/home/user/hooks/gets-communities";
 import { apiClient } from "@/utils/client";
 import { useAtom } from "jotai/index";
 import { useRouter } from "next/navigation";
