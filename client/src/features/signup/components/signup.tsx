@@ -127,6 +127,9 @@ export const SignUpDialog = (props: SignUpProps) => {
       router.push(go_url);
     } catch (err) {
       console.error("Sign up error:", err);
+      setTimeout(() => {
+        toast.error("サインアップに失敗しました");
+      }, 10);
     }
   };
 

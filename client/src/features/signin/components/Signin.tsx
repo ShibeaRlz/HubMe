@@ -27,6 +27,7 @@ import { useAtom } from "jotai/index";
 import { CircleChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -90,6 +91,7 @@ export const SignInDialog = (props: LoginCardProps) => {
 
       if (props.type === "user") {
         setCurrentAccountType("user");
+
         const uuid = signInResponse.data.uuid;
         const response = await apiClient.get(`${get_base_url}/${uuid}`);
         console.log(response);
@@ -104,6 +106,7 @@ export const SignInDialog = (props: LoginCardProps) => {
       } else if (props.type === "community") {
         setCurrentAccountType("community");
         const uuid = signInResponse.data.uuid;
+
         const response = await apiClient.get(`${get_base_url}/${uuid}`);
         console.log(response);
         const community: Community = {
@@ -119,12 +122,19 @@ export const SignInDialog = (props: LoginCardProps) => {
       toast("サインインしました。");
     } catch (err) {
       console.error(err);
+      setTimeout(() => {
+        toast.error("サインインに失敗しました");
+      }, 10);
     }
   };
 
   const onClick = () => {
     router.push(signup_url);
   };
+
+  React.useEffect(() => {
+    setCurrentAccountType("not");
+  }, []);
 
   return (
     <Card className={style.card}>
