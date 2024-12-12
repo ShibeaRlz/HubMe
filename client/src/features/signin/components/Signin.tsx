@@ -46,37 +46,35 @@ const LoginFormSchema = z.object({
 type LoginForm = z.infer<typeof LoginFormSchema>;
 
 export const SignInDialog = (props: LoginCardProps) => {
-  const [currentUser, setCurrentUser] = useAtom(userAtom);
-  const [currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
+  const [_currentUser, setCurrentUser] = useAtom(userAtom);
+  const [_currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
   const [_currentAccountType, setCurrentAccountType] = useAtom(accountTypeAtom);
   const router = useRouter();
 
-  react.useEffect(() => {
-    console.log("currentUser updated:", currentUser);
-    console.log("currentCommunity updated:", currentCommunity);
-  }, [currentUser, currentCommunity]);
+  // react.useEffect(() => {
+  //   console.log("currentUser updated:", currentUser);
+  //   console.log("currentCommunity updated:", currentCommunity);
+  // }, [currentUser, currentCommunity]);
 
-  let title = "";
-  let alternative = "";
-  let get_base_url = "";
-  let signin_url = "";
-  let signup_url = "";
-  let link = "";
-  if (props.type === "user") {
-    title = "ユーザーログイン";
-    alternative = "イベント・サークル運営者の方はこちら";
-    get_base_url = "/user";
-    signin_url = "/user/signin";
-    signup_url = "/user/signup";
-    link = "/community/signin";
-  } else if (props.type === "community") {
-    title = "イベント・サークル運営者ログイン";
-    alternative = "ユーザーの方はこちら";
-    get_base_url = "/community";
-    signin_url = "/community/signin";
-    signup_url = "/community/signup";
-    link = "/user/signin";
-  }
+  const get_base_url = `/${props.type}`;
+  const signup_url = `/${props.type}/signup`;
+  const signin_url = `/${props.type}/signin`;
+
+  const otherType = props.type === "user" ? "community" : "user";
+  const link = `/${otherType}/signin`;
+
+  const config = {
+    user: {
+      title: "ユーザーログイン",
+      alternative: "イベント・サークル運営者の方はこちら",
+    },
+    community: {
+      title: "イベント・サークル運営者ログイン",
+      alternative: "ユーザーの方はこちら",
+    },
+  };
+
+  const { title, alternative } = config[props.type] || {};
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(LoginFormSchema),
