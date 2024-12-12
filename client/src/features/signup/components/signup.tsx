@@ -51,30 +51,24 @@ export const SignUpDialog = (props: SignUpProps) => {
   const [currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
   const [_currentAccountType, setCurrentAccountType] = useAtom(accountTypeAtom);
 
-  let name = "";
-  let introduction = "";
-  let api_url = "";
-  let go_url = "";
-  // let title = "";
-  // let alternative = "";
-  let get_base_url = "";
-  if (props.type === "user") {
-    // title = "ユーザーログイン";
-    name = "ニックネーム";
-    introduction = "自己紹介";
-    api_url = "/user/signup";
-    go_url = "/user/signup/tags";
-    // alternative = "イベント・サークル運営者の方はこちら";
-    get_base_url = "/user";
-  } else if (props.type === "community") {
-    // title = "イベント・サークル運営者ログイン";
-    // alternative = "ユーザーの方はこちら";
-    name = "団体名";
-    introduction = "団体紹介";
-    api_url = "/community/signup";
-    go_url = "/community/signup/tags";
-    get_base_url = "/community";
-  }
+  const config = {
+    user: {
+      name: "ニックネーム",
+      introduction: "自己紹介",
+      api_url: "/user/signup",
+      go_url: "/user/signup/tags",
+      get_base_url: "/user",
+    },
+    community: {
+      name: "団体名",
+      introduction: "団体紹介",
+      api_url: "/community/signup",
+      go_url: "/community/signup/tags",
+      get_base_url: "/community",
+    },
+  };
+
+  const { name, introduction, api_url, go_url, get_base_url } = config[props.type] || {};
 
   const form = useForm<SignupForm>({
     // resolver: zodResolver(SignupFormSchema),
