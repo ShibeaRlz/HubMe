@@ -46,29 +46,26 @@ type SignupForm = z.infer<typeof SignupFormSchema>;
 export const SignUpDialog = (props: SignUpProps) => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  // const [user, setUserAtom] = useAtom(userAtom);
   const [currentUser, setCurrentUser] = useAtom(userAtom);
   const [currentCommunity, setCurrentCommunity] = useAtom(communityAtom);
   const [_currentAccountType, setCurrentAccountType] = useAtom(accountTypeAtom);
+
+  const get_base_url = `/${props.type}`;
+  const api_url = `/${props.type}/signup`;
+  const go_url = `/${props.type}/signup/tags`;
 
   const config = {
     user: {
       name: "ニックネーム",
       introduction: "自己紹介",
-      api_url: "/user/signup",
-      go_url: "/user/signup/tags",
-      get_base_url: "/user",
     },
     community: {
       name: "団体名",
       introduction: "団体紹介",
-      api_url: "/community/signup",
-      go_url: "/community/signup/tags",
-      get_base_url: "/community",
     },
   };
 
-  const { name, introduction, api_url, go_url, get_base_url } = config[props.type] || {};
+  const { name, introduction } = config[props.type] || {};
 
   const form = useForm<SignupForm>({
     // resolver: zodResolver(SignupFormSchema),
