@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import styles from "../styles/user-card.module.scss";
 
 export type UserCardType = {
@@ -26,8 +27,10 @@ export function UserCard({
   onClick,
   selected,
 }: UserCardType) {
+  const router = useRouter();
   const handleDetailClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    router.push(`/community/user-detail?uuid=${uuid}`);
     console.log(uuid);
   };
 
