@@ -46,7 +46,7 @@ jobs:
         working-directory: server
         run: |
           mysql -h 127.0.0.1 -P 3306 -u root -e "CREATE DATABASE IF NOT EXISTS db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
-          migrate -path migrations -database "mysql://root:@127.0.0.1:3306/db?parseTime=true" up
+          migrate -path db/migrations -database "mysql://root:@127.0.0.1:3306/db?parseTime=true" up
       - name: install tbls
         uses: k1low/setup-tbls@v1
       - name: run tbls
