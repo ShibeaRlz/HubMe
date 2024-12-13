@@ -35,6 +35,7 @@ jobs:
           check-latest: true
         id: go
       - name: Ensure go.mod is tidied
+        working-directory: server
         run: go mod tidy
 #      - name: install golang-migrate
 #        run: go install -v github.com/rubenv/sql-migrate/sql-migrate@latest
