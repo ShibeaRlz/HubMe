@@ -37,8 +37,8 @@ jobs:
       - name: Ensure go.mod is tidied
         working-directory: server
         run: go mod tidy
-#      - name: install golang-migrate
-#        run: go install -v github.com/rubenv/sql-migrate/sql-migrate@latest
+      - name: install golang-migrate
+        run: go install -tags 'mysql' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
       - name: mysql wakeup
         run: |
           until (echo 'SELECT 1' | mysql -h 127.0.0.1 -P 3306 -uroot --silent &> /dev/null); do echo "waiting for mysql to be connectable" && sleep 2; done
@@ -46,7 +46,7 @@ jobs:
         working-directory: server
         run: |
           mysql -h 127.0.0.1 -P 3306 -u root -e "CREATE DATABASE IF NOT EXISTS db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
-          docker run -v $(pwd)/db/migrations:/migrations migrate/migrate:latest -path migrations -database "mysql://root:@127.0.0.1:3306/db?parseTime=true" up
+          migrate -path migrations -database "mysql://root:@127.0.0.1:3306/db?parseTime=true" up
       - name: install tbls
         uses: k1low/setup-tbls@v1
       - name: run tbls
