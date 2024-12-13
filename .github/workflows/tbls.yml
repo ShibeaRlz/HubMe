@@ -55,9 +55,8 @@ jobs:
       - name: install tbls
         uses: k1low/setup-tbls@v1
       - name: run tbls
-        working-directory: server
         run: |
-          TBLS_DSN=mysql://root:@localhost:3306/db tbls doc --rm-dist --config ./config/.tbls.yml
+          TBLS_DSN=mysql://root:@localhost:3306/db tbls doc --rm-dist --config server/config/.tbls.yml
       - name: fix tbls
         uses: dev-hato/actions-diff-pr-management@v1
         with:
