@@ -43,6 +43,7 @@ func (h *tagHandler) GetAll(ctx *gin.Context) {
 		return
 	}
 
+
 	var res []gin.H
 	for _, tag := range tags {
 		res = append(res, gin.H{
@@ -52,4 +53,5 @@ func (h *tagHandler) GetAll(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, res)
+
 }
