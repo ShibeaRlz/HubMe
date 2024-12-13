@@ -11,11 +11,11 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { UserList } from "./components/UserList";
 import { MessageForm } from "./components/message-form";
 import { SearchBar } from "./components/search-bar";
 import { SearchTags } from "./components/search-tags";
 import { SelectedUserBadges } from "./components/selected-user-badges";
-import { UserList } from "./components/user-list";
 
 export function CommunityHome() {
   const [users, setUsers] = useState<User[]>([]);
