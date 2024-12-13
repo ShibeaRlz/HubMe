@@ -16,7 +16,6 @@ import react from "react";
 import React from "react";
 import z from "zod";
 
-//user-detail
 const profileSchema = z.object({
   name: z.string(),
   mem1: z.string(),
@@ -86,9 +85,11 @@ export const ProfileCard = () => {
   );
 };
 
-type ProfileDetailCardProps = {
-  uuid: string;
-};
+const profileDetailCardPropsSchema = z.object({
+  uuid: z.string(),
+});
+
+type ProfileDetailCardProps = z.infer<typeof profileDetailCardPropsSchema>;
 
 //uuidを渡すように
 export const ProfileDetailCard = (props: ProfileDetailCardProps) => {
