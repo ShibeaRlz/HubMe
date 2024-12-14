@@ -73,7 +73,7 @@
 .profile_card {
   width: 1000px;
   height: 500px;
-  margin: 0, 10rem;
+  margin: 0 10rem;
   position: relative;
   display: flex; //titleとselfを横並びにするのに使った
   border: 3px solid theme.$black;
@@ -141,6 +141,7 @@
   border: solid theme.$black;
   overflow: hidden;
 }
+
 
 .profile_detail_tags {
   width: 90%;

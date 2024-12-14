@@ -1,5 +1,6 @@
 "use client";
 import Pencil from "@/../public/pencil";
+import CardTag from "@/components/tags/card-tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +11,7 @@ import { accountTypeAtom, communityAtom, userAtom } from "@/features/account/sto
 import { Community } from "@/features/account/types/community";
 import { User } from "@/features/account/types/user";
 import style from "@/features/profile/components/style.module.scss";
+import { ButtonVariant } from "@/features/tags/types/tag";
 import { apiClient } from "@/utils/client";
 import { useAtom } from "jotai/index";
 import Link from "next/link";
@@ -115,7 +117,16 @@ export const ProfileDetailCard = (props: ProfileDetailCardProps) => {
   return (
     <div>
       <Card className={style.profile_detail_card}>
-        <div className={style.profile_detail_tags}>タグず</div>
+        <div className={style.profile_detail_tags}>
+          {detail?.tag_name?.map((tag, index) => (
+            <CardTag
+              key={tag}
+              variant={detail?.tag_colors?.[index]?.toLowerCase() as ButtonVariant}
+            >
+              {tag || "タグなし"}
+            </CardTag>
+          ))}
+        </div>
         <div className={style.profile_property_container}>
           <h1 className={style.profile_detail_name}>{detail?.name || "データなし"}</h1>
           <Avatar className={style.profile_detail_avatar_card}>
