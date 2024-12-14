@@ -1,5 +1,5 @@
 "use client";
-import CardTag from "@/components/tags/card-tag";
+import Tag from "@/components/tags/Tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { ButtonVariant } from "@/features/tags/types/tag";
@@ -23,8 +23,8 @@ export function UserCard({
   uuid,
   username,
   icon,
-  tags,
-  tag_colors,
+  tags = [],
+  tag_colors = [],
   detail,
   university,
   onClick,
@@ -37,16 +37,17 @@ export function UserCard({
   };
 
   const handleClick = () => {
+    console.log(tags);
     onClick();
   };
 
   return (
     <Card className={cn(styles.profileCard, selected && styles.selected)} onClick={handleClick}>
       <div className={styles.tagsContainer}>
-        {tags?.map((tag, index) => (
-          <CardTag key={tag} variant={tag_colors?.[index]?.toLowerCase() as ButtonVariant}>
+        {tags.map((tag, index) => (
+          <Tag key={tag} variant={tag_colors[index]?.toLowerCase() as ButtonVariant} tagType="tag">
             {tag}
-          </CardTag>
+          </Tag>
         ))}
       </div>
 

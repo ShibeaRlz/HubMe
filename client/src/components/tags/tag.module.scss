@@ -1,0 +1,126 @@
+@use "@/styles/theme";
+
+.card_tag {
+  overflow: hidden;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-width: 2px;
+  border-radius: 9999px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-property: color, background-color, border-color;
+  font-family: 'Calibri';
+}
+
+.cardSmall {
+  min-width: 5rem;
+  padding: 0 2rem;
+}
+
+.cardMedium {
+  min-width: 7rem;
+  padding: 0 2rem;
+}
+
+.cardLarge {
+  min-width: 9rem;
+  padding: 0 2rem;
+}
+
+.red {
+  color: theme.$red;
+  border-color: theme.$red;
+  background-color: mix(theme.$red, theme.$white, 15%);
+
+  &:hover {
+    color: theme.$red;
+    border-color: theme.$red;
+    background-color: mix(theme.$red, theme.$white, 15%);
+  }
+}
+
+.blue {
+  color: theme.$blue;
+  border-color: theme.$blue;
+  background-color: mix(theme.$blue, theme.$white, 15%);
+
+  &:hover {
+    color: theme.$blue;
+    border-color: theme.$blue;
+    background-color: mix(theme.$blue, theme.$white, 15%);
+  }
+}
+.yellow{
+  color: theme.$yellow;
+  border-color: theme.$yellow;
+  background-color: mix(theme.$yellow, theme.$white, 15%);
+
+  &:hover {
+    color: theme.$yellow;
+    border-color: theme.$yellow;
+    background-color: mix(theme.$yellow, theme.$white, 15%);
+  }
+}
+
+.green {
+  color: theme.$green;
+  border-color: theme.$green;
+  background-color: mix(theme.$green, theme.$white, 15%);
+
+  &:hover {
+    color: theme.$green;
+    border-color: theme.$green;
+    background-color: mix(theme.$green, theme.$white, 15%);
+  }
+}
+
+.gray {
+  color: theme.$gray;
+  border-color: theme.$black;
+  background-color: mix(theme.$gray, theme.$white, 15%);
+
+  &:hover {
+    color: theme.$gray;
+    border-color: theme.$black;
+    background-color: mix(theme.$gray, theme.$white, 15%);
+  }
+}
+
+
+.purple {
+  color: theme.$purple;
+  border-color: theme.$purple;
+  background-color: mix(theme.$purple, theme.$white, 15%);
+
+  &:hover {
+    color: theme.$purple;
+    border-color: theme.$purple;
+    background-color: mix(theme.$purple, theme.$white, 15%);
+  }
+}
+
+.pink {
+  color: theme.$pink;
+  border-color: theme.$pink;
+  background-color: mix(theme.$pink, theme.$white, 15%);
+
+  &:hover {
+    color: theme.$pink;
+    border-color: theme.$pink;
+    background-color: mix(theme.$pink, theme.$white, 15%);
+  }
+}
+
+.orange {
+  color: theme.$orange;
+  border-color: theme.$orange;
+  background-color: mix(theme.$orange, theme.$white, 15%);
+
+  &:hover {
+    color: theme.$orange;
+    border-color: theme.$orange;
+    background-color: mix(theme.$orange, theme.$white, 15%);
+  }
+}

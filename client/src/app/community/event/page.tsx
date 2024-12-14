@@ -1,8 +1,8 @@
 "use client";
 import InviteCheck from "@/../public/invite-check";
 import LikeSearch from "@/../public/like-search";
+import TagButton from "@/components/tags/Tag";
 import { getTags } from "@/components/tags/hooks/get-tags";
-import TagButton from "@/components/tags/tag-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EventCard } from "@/features/event";
 import { getEvents } from "@/features/event/hooks/get-events";

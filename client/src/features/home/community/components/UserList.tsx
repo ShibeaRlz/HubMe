@@ -20,7 +20,7 @@ export function UserList({ users, handleCardClick, selectedUser }: UserListProps
             uuid={user.uuid}
             username={user.name}
             icon={user.img}
-            tags={user.tag_name}
+            tags={user.tags}
             tag_colors={user.tag_colors}
             detail={user.self}
             university={user.mem1}

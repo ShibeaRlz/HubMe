@@ -1,15 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import styles from "./style.module.scss";
+import styles from "./tag.module.scss";
 
-type ButtonVariant = "red" | "blue" | "green" | "gray" | "purple";
+type ButtonVariant = "red" | "blue" | "green" | "gray" | "purple" | "yellow" | "pink" | "orange";
 
-interface TagButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type TagProps = {
   variant?: ButtonVariant;
   children: React.ReactNode;
   defaultActive?: boolean;
-}
+  tagType?: "button" | "tag";
+  onClick?: () => void;
+};
 
 function getContentLength(content: React.ReactNode): number {
   if (typeof content === "string") {
@@ -19,9 +21,9 @@ function getContentLength(content: React.ReactNode): number {
 }
 
 function getSizeClass(length: number): string {
-  if (length <= 3) return styles.small;
-  if (length <= 5) return styles.medium;
-  return styles.large;
+  if (length <= 3) return styles.cardSmall;
+  if (length <= 5) return styles.cardMedium;
+  return styles.cardLarge;
 }
 
 function formatContent(children: React.ReactNode): React.ReactNode {
@@ -30,25 +32,27 @@ function formatContent(children: React.ReactNode): React.ReactNode {
   }
 
   const contentLength = getContentLength(children);
-  if (contentLength > 8) {
+  if (contentLength > 12) {
     return `${Array.from(children).slice(0, 8).join("")}...`;
   }
   return children;
 }
 
-const TagButton: React.FC<TagButtonProps> = ({
+const Tag: React.FC<TagProps> = ({
   variant = "red",
   children,
-  className,
   defaultActive = false,
+  tagType = "button",
   onClick,
   ...props
 }) => {
   const [isActive, setIsActive] = useState(defaultActive);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setIsActive(!isActive);
-    onClick?.(event);
+  const handleClick = () => {
+    if (tagType === "button") {
+      setIsActive(!isActive);
+      onClick?.();
+    }
   };
 
   const contentLength = getContentLength(children);
@@ -57,14 +61,7 @@ const TagButton: React.FC<TagButtonProps> = ({
 
   return (
     <Button
-      // variant="Link"
-      className={cn(
-        styles.tag_button,
-        styles[variant],
-        sizeClass,
-        isActive && styles.active,
-        className,
-      )}
+      className={cn(styles.card_tag, styles[variant], sizeClass, isActive && styles.active)}
       onClick={handleClick}
       {...props}
     >
@@ -73,4 +70,4 @@ const TagButton: React.FC<TagButtonProps> = ({
   );
 };
 
-export default TagButton;
+export default Tag;
