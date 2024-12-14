@@ -1,3 +1,4 @@
+// TagCard.tsx
 "use client";
 import Tag from "./Tag";
 import { getTags } from "@/features/tags/hooks/get-tags";
@@ -10,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { userAtom } from "@/features/account/stores";
 import { communityAtom } from "@/features/account/stores";
 import { ButtonVariant, TagType } from "@/features/tags/types/tag";
@@ -17,6 +19,7 @@ import { apiClient } from "@/utils/client";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { SearchBar } from "./SearchBar";
 import style from "./style.module.scss";
 
 type TagCardProps = {
@@ -33,6 +36,11 @@ export const TagCard = ({ type }: TagCardProps) => {
   const [error, setError] = useState<string | null>(null);
   const [currentUser] = useAtom(userAtom);
   const [currentCommunity] = useAtom(communityAtom);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredTags = tags.filter(tag =>
+    tag.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   useEffect(() => {
     console.log("aiRecommendedTags updated:", aiRecommendedTags);
@@ -68,7 +76,7 @@ export const TagCard = ({ type }: TagCardProps) => {
       try {
         await fetchTags();
 
-        const wsUrl = `ws://localhost:8080/api/ws/tag_recommend/${uuid}`;
+        const wsUrl = `${process.env.NEXT_PUBLIC_WEBSOCKET_URL}/ws/tag_recommend/${uuid}`;
         console.log("Initializing WebSocket connection to:", wsUrl);
         wsInstance = new WebSocket(wsUrl);
         ws.current = wsInstance;
@@ -200,17 +208,23 @@ export const TagCard = ({ type }: TagCardProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className={style.tagContainer}>
-          {tags.slice(0, 12).map((tag, index) => (
-            <Tag
-              key={index}
-              variant={tag.color}
-              onClick={() => handleTagClick(index)}
-            >
-              {tag.name}
-            </Tag>
-          ))}
-        </div>
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <ScrollArea className="w-full whitespace-nowrap rounded-md border">
+          <div className={style.tagContainer}>
+            {filteredTags.map((tag, index) => (
+              <Tag
+                key={index}
+                variant={tag.color}
+                className={`${selectedTags.has(index) ? style.selected : ""}`}
+                onClick={() => handleTagClick(index)}
+                tagType="button"
+              >
+                {tag.name}
+              </Tag>
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
 
         {aiRecommendedTags &&
           aiRecommendedTags.length > 0 &&
@@ -223,6 +237,7 @@ export const TagCard = ({ type }: TagCardProps) => {
                     key={`ai-recommended-${index}`}
                     variant={tag.color}
                     tagType="button"
+                    className={`${selectedTags.has(index) ? style.selected : ""} ${style.aiTag}`}
                     onClick={() => handleTagClick(index, true)}
                   >
                     {tag.name}
