@@ -1,6 +1,6 @@
-import Tag from "@/features/tags/components/Tag";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import Tag from "@/features/tags/components/Tag";
 import { TagType } from "@/features/tags/types/tag";
 import { useState } from "react";
 import style from "../styles/search-tags.module.scss";
@@ -30,7 +30,12 @@ export function SearchTags({ tag_name, handleTagClick }: SearchTagsProps) {
       <ScrollArea className="w-full whitespace-nowrap rounded-md border gap-1">
         <div className="flex w-max space-x-4 p-4">
           {filteredTags?.map(tag => (
-            <Tag key={tag.name} variant={tag.color} onClick={() => handleTagClick(tag)} tagType="button">
+            <Tag
+              key={tag.name}
+              variant={tag.color}
+              onClick={() => handleTagClick(tag)}
+              tagType="button"
+            >
               {tag.name}
             </Tag>
           ))}

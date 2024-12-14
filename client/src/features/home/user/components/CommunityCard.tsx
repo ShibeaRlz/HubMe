@@ -1,7 +1,7 @@
 "use client";
-import Tag from "@/features/tags/components/Tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
+import Tag from "@/features/tags/components/Tag";
 import { ButtonVariant } from "@/features/tags/types/tag";
 import { useRouter } from "next/navigation";
 import styles from "../styles/community-card.module.scss";
@@ -41,7 +41,11 @@ export function CommunityCard({
     <Card className={styles.profileCard} onClick={handleClick}>
       <div className={styles.tagsContainer}>
         {tag_name?.map((tag, index) => (
-          <Tag key={tag} variant={tag_colors?.[index]?.toLowerCase() as ButtonVariant} tagType="badge">
+          <Tag
+            key={tag}
+            variant={tag_colors?.[index]?.toLowerCase() as ButtonVariant}
+            tagType="badge"
+          >
             {tag}
           </Tag>
         ))}

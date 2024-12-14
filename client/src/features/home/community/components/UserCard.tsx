@@ -1,7 +1,7 @@
 "use client";
-import Tag from "@/features/tags/components/Tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
+import Tag from "@/features/tags/components/Tag";
 import { ButtonVariant } from "@/features/tags/types/tag";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -45,7 +45,11 @@ export function UserCard({
     <Card className={cn(styles.profileCard, selected && styles.selected)} onClick={handleClick}>
       <div className={styles.tagsContainer}>
         {tag_name.map((tag, index) => (
-          <Tag key={tag} variant={tag_colors[index]?.toLowerCase() as ButtonVariant} tagType="badge">
+          <Tag
+            key={tag}
+            variant={tag_colors[index]?.toLowerCase() as ButtonVariant}
+            tagType="badge"
+          >
             {tag}
           </Tag>
         ))}

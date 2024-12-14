@@ -1,6 +1,5 @@
 "use client";
 import Pencil from "@/../public/pencil";
-import Tag from "@/features/tags/components/Tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +10,7 @@ import { accountTypeAtom, communityAtom, userAtom } from "@/features/account/sto
 import { Community } from "@/features/account/types/community";
 import { User } from "@/features/account/types/user";
 import style from "@/features/profile/components/style.module.scss";
+import Tag from "@/features/tags/components/Tag";
 import { ButtonVariant } from "@/features/tags/types/tag";
 import { apiClient } from "@/utils/client";
 import { useAtom } from "jotai/index";

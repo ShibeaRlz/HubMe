@@ -1,12 +1,12 @@
 "use client";
 
-import Tag from "@/features/tags/components/Tag";
-import { getTags } from "@/features/tags/hooks/get-tags";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Community } from "@/features/account/types/community";
 import { CommunityCard } from "@/features/home/user/components/CommunityCard";
 import { GetCommunities } from "@/features/home/user/hooks/gets-communities";
+import Tag from "@/features/tags/components/Tag";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { TagType } from "@/features/tags/types/tag";
 import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

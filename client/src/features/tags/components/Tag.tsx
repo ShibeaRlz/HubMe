@@ -42,7 +42,6 @@ const Tag: React.FC<TagProps> = ({
   className,
   ...props
 }) => {
-
   const handleClick = () => {
     if (tagType === "button") {
       onClick?.();
@@ -55,12 +54,21 @@ const Tag: React.FC<TagProps> = ({
   return (
     <>
       {tagType === "badge" ? (
-        <Badge className={cn(badge_style.tag, badge_style[variant], sizeClass, className)} {...props}>
+        <Badge
+          className={cn(badge_style.tag, badge_style[variant], sizeClass, className)}
+          {...props}
+        >
           {children}
         </Badge>
       ) : (
         <Button
-          className={cn(button_style.tag, button_style[variant], sizeClass, selected && button_style.active, className)}
+          className={cn(
+            button_style.tag,
+            button_style[variant],
+            sizeClass,
+            selected && button_style.active,
+            className,
+          )}
           onClick={handleClick}
           {...props}
         >

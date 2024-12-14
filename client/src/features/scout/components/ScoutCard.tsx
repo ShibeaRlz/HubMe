@@ -1,9 +1,9 @@
 "use client";
-import Tag from "@/features/tags/components/Tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { updateScoutStatusForReaded } from "@/features/scout/funcs/updateScoutStatus";
+import Tag from "@/features/tags/components/Tag";
 import { heartColor } from "@/styles/theme";
 import { Heart, SquareX } from "lucide-react";
 import React from "react";

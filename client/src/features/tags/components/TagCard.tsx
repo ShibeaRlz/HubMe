@@ -1,7 +1,5 @@
 // TagCard.tsx
 "use client";
-import Tag from "./Tag";
-import { getTags } from "@/features/tags/hooks/get-tags";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,12 +12,14 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { userAtom } from "@/features/account/stores";
 import { communityAtom } from "@/features/account/stores";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { ButtonVariant, TagType } from "@/features/tags/types/tag";
 import { apiClient } from "@/utils/client";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { SearchBar } from "./SearchBar";
+import Tag from "./Tag";
 import style from "./style.module.scss";
 
 type TagCardProps = {

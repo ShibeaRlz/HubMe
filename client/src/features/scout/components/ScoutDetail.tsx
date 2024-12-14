@@ -1,4 +1,3 @@
-import Tag from "@/features/tags/components/Tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -6,6 +5,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { getCommunityByUUID } from "@/features/account/api";
 import { Community } from "@/features/account/types/community";
 import style from "@/features/scout/styles/ScoutDetail.module.scss";
+import Tag from "@/features/tags/components/Tag";
 import { heartColor } from "@/styles/theme";
 import { Heart, SquareX } from "lucide-react";
 import React from "react";
@@ -38,7 +38,7 @@ export const ScoutDetail = (props: ScoutDetailProps) => {
     const communityInfo: CommunityInfo = {
       name: communityData.name,
       mem1: communityData.mem1,
-      tag_name: communityData.tags,
+      tag_name: communityData.tag_name,
       icon: communityData.img,
       self: communityData.self,
     };

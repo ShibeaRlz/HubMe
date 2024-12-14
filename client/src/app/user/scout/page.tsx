@@ -44,7 +44,7 @@ const ScoutListPage = () => {
         name: item.detail_info.name,
         icon: item.detail_info.img,
         mem1: item.detail_info.mem1,
-        tag_name: item.detail_info.tags,
+        tag_name: item.detail_info.tag_name,
         isLiked: false,
       }));
   };

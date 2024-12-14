@@ -1,11 +1,11 @@
 "use client";
 
-import { getTags } from "@/features/tags/hooks/get-tags";
 import { communityAtom } from "@/features/account/stores";
 import { User } from "@/features/account/types/user";
 import { GetUsers } from "@/features/home/community/hooks/gets-users";
 import { postScout } from "@/features/home/community/hooks/post-scout";
 import { ScoutPostType } from "@/features/home/community/types/scout";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { TagType } from "@/features/tags/types/tag";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
