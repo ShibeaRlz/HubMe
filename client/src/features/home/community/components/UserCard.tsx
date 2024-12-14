@@ -43,7 +43,7 @@ export function UserCard({
 
   return (
     <Card className={cn(styles.profileCard, selected && styles.selected)} onClick={handleClick}>
-      <div className={styles.tag_nameContainer}>
+      <div className={styles.tagsContainer}>
         {tag_name.map((tag, index) => (
           <Tag key={tag} variant={tag_colors[index]?.toLowerCase() as ButtonVariant} tagType="badge">
             {tag}

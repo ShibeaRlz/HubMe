@@ -215,7 +215,7 @@ export const TagCard = ({ type }: TagCardProps) => {
               <Tag
                 key={index}
                 variant={tag.color}
-                className={`${selectedTags.has(index) ? style.selected : ""}`}
+                selected={selectedTags.has(index)}
                 onClick={() => handleTagClick(index)}
                 tagType="button"
               >
@@ -237,7 +237,7 @@ export const TagCard = ({ type }: TagCardProps) => {
                     key={`ai-recommended-${index}`}
                     variant={tag.color}
                     tagType="button"
-                    className={`${selectedTags.has(index) ? style.selected : ""} ${style.aiTag}`}
+                    selected={selectedTags.has(index)}
                     onClick={() => handleTagClick(index, true)}
                   >
                     {tag.name}

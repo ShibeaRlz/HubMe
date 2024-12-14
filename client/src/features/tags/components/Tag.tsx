@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import badge_style from "./badge.module.scss";
 import button_style from "./button.module.scss";
 
@@ -10,10 +9,10 @@ type ButtonVariant = "red" | "blue" | "green" | "gray" | "purple" | "yellow" | "
 type TagProps = {
   variant?: ButtonVariant;
   children: React.ReactNode;
-  defaultActive?: boolean;
-  tagType?: "button" | "badge";
   selected?: boolean;
+  tagType?: "button" | "badge";
   onClick?: () => void;
+  className?: string; // classNameプロパティを追加
 };
 
 function getContentLength(content: React.ReactNode): number {
@@ -37,16 +36,15 @@ function getSizeClass(length: number, styles: { [key: string]: string }): string
 const Tag: React.FC<TagProps> = ({
   variant = "red",
   children,
-  defaultActive = false,
+  selected = false,
   tagType = "button",
   onClick,
+  className,
   ...props
 }) => {
-  const [isActive, setIsActive] = useState(defaultActive);
 
   const handleClick = () => {
     if (tagType === "button") {
-      setIsActive(!isActive);
       onClick?.();
     }
   };
@@ -57,12 +55,12 @@ const Tag: React.FC<TagProps> = ({
   return (
     <>
       {tagType === "badge" ? (
-        <Badge className={cn(badge_style.tag, badge_style[variant], sizeClass)} {...props}>
+        <Badge className={cn(badge_style.tag, badge_style[variant], sizeClass, className)} {...props}>
           {children}
         </Badge>
       ) : (
         <Button
-          className={cn(button_style.tag, button_style[variant], sizeClass, isActive && button_style.active)}
+          className={cn(button_style.tag, button_style[variant], sizeClass, selected && button_style.active, className)}
           onClick={handleClick}
           {...props}
         >
