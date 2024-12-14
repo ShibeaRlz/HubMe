@@ -46,7 +46,7 @@
     background-color: theme.$red;
 
     &:hover {
-      background-color: lighten(theme.$red, 10%);
+      background-color: color.adjust(theme.$red, $lightness: 10%);
     }
   }
 }
@@ -66,11 +66,12 @@
     background-color: theme.$blue;
 
     &:hover {
-      background-color: lighten(theme.$blue, 10%);
+      background-color: color.adjust(theme.$blue, $lightness: 10%);
     }
   }
 }
-.yellow{
+
+.yellow {
   color: theme.$yellow;
   border-color: theme.$yellow;
   background-color: color.mix(theme.$yellow, theme.$white, 15%);
@@ -85,7 +86,7 @@
     background-color: theme.$yellow;
 
     &:hover {
-      background-color: lighten(theme.$yellow, 10%);
+      background-color: color.adjust(theme.$yellow, $lightness: 10%);
     }
   }
 }
@@ -105,7 +106,7 @@
     background-color: theme.$green;
 
     &:hover {
-      background-color: lighten(theme.$green, 10%);
+      background-color: color.adjust(theme.$green, $lightness: 10%);
     }
   }
 }
@@ -125,11 +126,10 @@
     background-color: theme.$gray;
 
     &:hover {
-      background-color: lighten(theme.$gray, 10%);
+      background-color: color.adjust(theme.$gray, $lightness: 10%);
     }
   }
 }
-
 
 .purple {
   color: theme.$purple;
@@ -146,7 +146,7 @@
     background-color: theme.$purple;
 
     &:hover {
-      background-color: lighten(theme.$purple, 10%);
+      background-color: color.adjust(theme.$purple, $lightness: 10%);
     }
   }
 }
@@ -166,7 +166,7 @@
     background-color: theme.$pink;
 
     &:hover {
-      background-color: lighten(theme.$pink, 10%);
+      background-color: color.adjust(theme.$pink, $lightness: 10%);
     }
   }
 }
@@ -186,7 +186,7 @@
     background-color: theme.$orange;
 
     &:hover {
-      background-color: lighten(theme.$orange, 10%);
+      background-color: color.adjust(theme.$orange, $lightness: 10%);
     }
   }
 }
