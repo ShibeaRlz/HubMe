@@ -19,3 +19,11 @@ func NewTagClickHistory(db *gorm.DB) *TagClickHistoryRepository {
 func (r *TagClickHistoryRepository) Create(ctx context.Context, tagClickHistory *models.TagClickHistory) error {
 	return r.db.WithContext(ctx).Create(tagClickHistory).Error
 }
+
+func (r *TagClickHistoryRepository) FindByUUID(ctx context.Context, uuid string) ([]models.TagClickHistory, error) {
+	var tagClickHistories []models.TagClickHistory
+	if err := r.db.WithContext(ctx).Where("uuid = ?", uuid).Find(&tagClickHistories).Error; err != nil {
+		return nil, err
+	}
+	return tagClickHistories, nil
+}

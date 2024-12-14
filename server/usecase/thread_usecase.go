@@ -23,6 +23,7 @@ type ThreadUsecase struct {
 	tagRepo      repositories.ITagRepository
 	wsService    *middleware.WebSocketService
 	openAIClient *gpt.OpenAIClient
+	tagClickRepo repositories.ITagClickHistory
 }
 
 type RecommendedTags struct {
@@ -30,12 +31,13 @@ type RecommendedTags struct {
 	RecommendedTagColor []string `json:"recommendedTagColor"`
 }
 
-func NewThreadUsecase(threadRepo repositories.IThreadRepository, tagRepo repositories.ITagRepository, wsService *middleware.WebSocketService, openAIClient *gpt.OpenAIClient) IThreadUsecase {
+func NewThreadUsecase(threadRepo repositories.IThreadRepository, tagRepo repositories.ITagRepository, wsService *middleware.WebSocketService, openAIClient *gpt.OpenAIClient, tagClickRepo repositories.ITagClickHistory) IThreadUsecase {
 	return &ThreadUsecase{
 		threadRepo:   threadRepo,
 		tagRepo:      tagRepo,
 		wsService:    wsService,
 		openAIClient: openAIClient,
+		tagClickRepo: tagClickRepo,
 	}
 }
 
@@ -68,7 +70,17 @@ func (u *ThreadUsecase) CreateThread(ctx context.Context, uuid string, tags []*m
 }
 
 func (u *ThreadUsecase) ThreadMessage(ctx context.Context, threadID string, uuid string, tag string, tags []*models.Tag) ([]string, error) {
-	err := u.openAIClient.CreateMessage(ctx, threadID, gpt.Tag_In+tag)
+	tagclickhistory, err := u.tagClickRepo.FindByUUID(ctx, uuid)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find tag click history: %w", err)
+	}
+
+	var tagClickHistoryNames []string
+	for _, tagclick := range tagclickhistory {
+		tagClickHistoryNames = append(tagClickHistoryNames, tagclick.Tag)
+	}
+	content := gpt.Tag_In + tag + "\n" + gpt.Tag_Clicked + strings.Join(tagClickHistoryNames, ",")
+	err = u.openAIClient.CreateMessage(ctx, threadID, content)
 	if err != nil {
 		return nil, err
 	}

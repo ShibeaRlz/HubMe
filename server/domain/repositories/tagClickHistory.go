@@ -7,4 +7,5 @@ import (
 
 type ITagClickHistory interface {
 	Create(ctx context.Context, tagClickHistory *models.TagClickHistory) error
+	FindByUUID(ctx context.Context, uuid string) ([]models.TagClickHistory, error)
 }
