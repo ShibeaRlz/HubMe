@@ -15,7 +15,7 @@ export const detailInfoSchema = z.object({
   name: z.string(),
   img: z.string().optional(),
   mem1: z.string(),
-  tags: z.string().array().optional(),
+  tag_name: z.string().array().optional(),
 });
 
 export type DetailInfo = z.infer<typeof detailInfoSchema>;

@@ -1,6 +1,6 @@
 "use client";
-import CardTag from "@/components/tags/card-tag";
-import { getTags } from "@/components/tags/hooks/get-tags";
+import Tag from "./Tag";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -202,14 +202,13 @@ export const TagCard = ({ type }: TagCardProps) => {
       <CardContent>
         <div className={style.tagContainer}>
           {tags.slice(0, 12).map((tag, index) => (
-            <CardTag
+            <Tag
               key={index}
               variant={tag.color}
-              className={`${selectedTags.has(index) ? style.selected : ""}`}
               onClick={() => handleTagClick(index)}
             >
               {tag.name}
-            </CardTag>
+            </Tag>
           ))}
         </div>
 
@@ -220,14 +219,14 @@ export const TagCard = ({ type }: TagCardProps) => {
               <div className={style.aiRecommendedLabel}>AIおすすめ</div>
               <div className={style.aiRecommendedTags}>
                 {aiRecommendedTags.map((tag, index) => (
-                  <CardTag
+                  <Tag
                     key={`ai-recommended-${index}`}
                     variant={tag.color}
-                    className={`${selectedTags.has(index) ? style.selected : ""}`}
+                    tagType="button"
                     onClick={() => handleTagClick(index, true)}
                   >
                     {tag.name}
-                  </CardTag>
+                  </Tag>
                 ))}
               </div>
             </div>

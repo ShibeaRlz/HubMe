@@ -1,9 +1,11 @@
 @use "@/styles/theme";
 
-.card_tag {
+.tag {
   overflow: hidden;
   font-size: 1.3rem;
   font-weight: 500;
+  padding: 5px 1rem;
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   border-width: 2px;
@@ -14,19 +16,16 @@
   font-family: 'Calibri';
 }
 
-.cardSmall {
+.small {
+  min-width: 3rem;
+}
+
+.medium {
   min-width: 5rem;
-  padding: 0 2rem;
 }
 
-.cardMedium {
+.large {
   min-width: 7rem;
-  padding: 0 2rem;
-}
-
-.cardLarge {
-  min-width: 9rem;
-  padding: 0 2rem;
 }
 
 .red {

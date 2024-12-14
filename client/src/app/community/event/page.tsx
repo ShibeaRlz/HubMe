@@ -1,8 +1,8 @@
 "use client";
 import InviteCheck from "@/../public/invite-check";
 import LikeSearch from "@/../public/like-search";
-import TagButton from "@/components/tags/Tag";
-import { getTags } from "@/components/tags/hooks/get-tags";
+import TagButton from "@/features/tags/components/Tag";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EventCard } from "@/features/event";
 import { getEvents } from "@/features/event/hooks/get-events";
@@ -74,9 +74,9 @@ const EventPage = () => {
         </div>
 
         <div className={styles.tagWrapper}>
-          {tags?.length > 0 ? (
+          {tag_name?.length > 0 ? (
             <div className={styles.tagsContainer}>
-              {tags.map(tag => (
+              {tag_name.map(tag => (
                 <TagButton key={tag.name} variant="red">
                   {tag.name}
                 </TagButton>

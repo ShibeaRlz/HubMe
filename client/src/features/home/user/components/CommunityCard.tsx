@@ -1,5 +1,5 @@
 "use client";
-import CardTag from "@/components/tags/card-tag";
+import Tag from "@/features/tags/components/Tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { ButtonVariant } from "@/features/tags/types/tag";
@@ -10,7 +10,7 @@ export type CommunityCardType = {
   uuid: string;
   communityname: string;
   icon?: string;
-  tags?: string[];
+  tag_name?: string[];
   tag_colors?: string[];
   detail?: string;
   university?: string;
@@ -21,7 +21,7 @@ export function CommunityCard({
   uuid,
   communityname,
   icon,
-  tags,
+  tag_name,
   tag_colors,
   detail,
   university,
@@ -40,10 +40,10 @@ export function CommunityCard({
   return (
     <Card className={styles.profileCard} onClick={handleClick}>
       <div className={styles.tagsContainer}>
-        {tags?.map((tag, index) => (
-          <CardTag key={tag} variant={tag_colors?.[index]?.toLowerCase() as ButtonVariant}>
+        {tag_name?.map((tag, index) => (
+          <Tag key={tag} variant={tag_colors?.[index]?.toLowerCase() as ButtonVariant} tagType="badge">
             {tag}
-          </CardTag>
+          </Tag>
         ))}
       </div>
 

@@ -21,7 +21,7 @@ const scoutListSchema = z.object({
   name: z.string(),
   icon: z.string().optional(),
   mem1: z.string(),
-  tags: z.string().array().optional(),
+  tag_name: z.string().array().optional(),
   isLiked: z.boolean(),
 });
 
@@ -44,7 +44,7 @@ const ScoutListPage = () => {
         name: item.detail_info.name,
         icon: item.detail_info.img,
         mem1: item.detail_info.mem1,
-        tags: item.detail_info.tags,
+        tag_name: item.detail_info.tags,
         isLiked: false,
       }));
   };

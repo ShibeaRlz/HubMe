@@ -1,7 +1,7 @@
 "use client";
 
-import CardTag from "@/components/tags/card-tag";
-import { getTags } from "@/components/tags/hooks/get-tags";
+import Tag from "@/features/tags/components/Tag";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Community } from "@/features/account/types/community";
@@ -97,9 +97,9 @@ export default function Home() {
           <ScrollArea className="w-full whitespace-nowrap rounded-md gap-1">
             <div className="flex w-max space-x-4 p-4">
               {filteredTags?.map(tag => (
-                <CardTag key={tag.name} variant={tag.color} onClick={() => handleTagClick(tag)}>
+                <Tag key={tag.name} variant={tag.color} onClick={() => handleTagClick(tag)}>
                   {tag.name}
-                </CardTag>
+                </Tag>
               ))}
             </div>
             <ScrollBar orientation="horizontal" />
@@ -114,7 +114,7 @@ export default function Home() {
                 uuid={community.uuid}
                 communityname={community.name}
                 icon={community.img}
-                tags={community.tag_name}
+                tag_name={community.tag_name}
                 tag_colors={community.tag_colors}
                 detail={community.self}
                 university={community.mem1}

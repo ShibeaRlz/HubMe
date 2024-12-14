@@ -1,7 +1,9 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import styles from "./tag.module.scss";
+import badge_style from "./badge.module.scss";
+import button_style from "./button.module.scss";
 
 type ButtonVariant = "red" | "blue" | "green" | "gray" | "purple" | "yellow" | "pink" | "orange";
 
@@ -9,7 +11,7 @@ type TagProps = {
   variant?: ButtonVariant;
   children: React.ReactNode;
   defaultActive?: boolean;
-  tagType?: "button" | "tag";
+  tagType?: "button" | "badge";
   onClick?: () => void;
 };
 
@@ -20,10 +22,10 @@ function getContentLength(content: React.ReactNode): number {
   return 0;
 }
 
-function getSizeClass(length: number): string {
-  if (length <= 3) return styles.cardSmall;
-  if (length <= 5) return styles.cardMedium;
-  return styles.cardLarge;
+function getSizeClass(length: number, styles: any): string {
+  if (length <= 3) return styles.small;
+  if (length <= 5) return styles.medium;
+  return styles.large;
 }
 
 function formatContent(children: React.ReactNode): React.ReactNode {
@@ -56,17 +58,25 @@ const Tag: React.FC<TagProps> = ({
   };
 
   const contentLength = getContentLength(children);
-  const sizeClass = getSizeClass(contentLength);
+  const sizeClass = getSizeClass(contentLength, tagType === "badge" ? badge_style : button_style);
   const formattedContent = formatContent(children);
 
   return (
-    <Button
-      className={cn(styles.card_tag, styles[variant], sizeClass, isActive && styles.active)}
-      onClick={handleClick}
-      {...props}
-    >
-      {formattedContent}
-    </Button>
+    <>
+      {tagType === "badge" ? (
+        <Badge className={cn(badge_style.tag, badge_style[variant], sizeClass)} {...props}>
+          {formattedContent}
+        </Badge>
+      ) : (
+        <Button
+          className={cn(button_style.tag, button_style[variant], sizeClass, isActive && button_style.active)}
+          onClick={handleClick}
+          {...props}
+        >
+          {formattedContent}
+        </Button>
+      )}
+    </>
   );
 };
 

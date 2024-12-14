@@ -1,6 +1,6 @@
 "use client";
 import Pencil from "@/../public/pencil";
-import Tag from "@/components/tags/Tag";
+import Tag from "@/features/tags/components/Tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -82,13 +82,13 @@ export const ProfileCard = () => {
           <CardContent>
             <p className={style.profile_self}>{currentProfile?.self || "データなし"}</p>
             <div className={style.profile_tag_container}>
-              <p className={style.profile_tag_name}>設定タグ</p>
+              <p className={style.profile_tags}>設定タグ</p>
               <div className={style.profile_tags}>
                 {currentProfile?.tag_name?.map((tag, index) => (
                   <Tag
                     key={tag}
                     variant={currentProfile?.tag_colors?.[index]?.toLowerCase() as ButtonVariant}
-                    tagType="tag"
+                    tagType="badge"
                   >
                     {tag || "タグなし"}
                   </Tag>
@@ -143,7 +143,7 @@ export const ProfileDetailCard = (props: ProfileDetailCardProps) => {
             <Tag
               key={tag}
               variant={detail?.tag_colors?.[index]?.toLowerCase() as ButtonVariant}
-              tagType="tag"
+              tagType="badge"
             >
               {tag || "タグなし"}
             </Tag>

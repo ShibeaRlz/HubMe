@@ -6,7 +6,7 @@ export const EventCardSchema = z.object({
   publisher: z.string(),
   publisherIcon: z.string(),
   datetime: z.string(),
-  tags: TagSchema.array(),
+  tag_name: TagSchema.array(),
   imageUrl: z.string(),
   liked: z.boolean(),
   handleEventClose: z.function(),

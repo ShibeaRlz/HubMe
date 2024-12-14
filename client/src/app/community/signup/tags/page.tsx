@@ -4,7 +4,7 @@ import style from "./style.module.scss";
 const RegisterTags = () => {
   const mockData = {
     message: "sign in successful",
-    tags: [
+    tag_name: [
       {
         ID: 2,
         color: "red",

@@ -1,6 +1,6 @@
 "use client";
 
-import { getTags } from "@/components/tags/hooks/get-tags";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { communityAtom } from "@/features/account/stores";
 import { User } from "@/features/account/types/user";
 import { GetUsers } from "@/features/home/community/hooks/gets-users";
@@ -46,12 +46,12 @@ export function CommunityHome() {
     const matchesName = user.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesTags =
       selectedTags.length === 0 ||
-      selectedTags.every(selectedTag => user.tags?.includes(selectedTag.name));
+      selectedTags.every(selectedTag => user.tag_name?.includes(selectedTag.name));
     return matchesName && matchesTags;
   });
 
   const handleCardClick = (user: User) => {
-    console.log("user", user.tags);
+    console.log("user", user.tag_name);
     if (!selectedUser.includes(user)) {
       setSelectedUser([...selectedUser, user]);
     } else {
@@ -112,7 +112,7 @@ export function CommunityHome() {
       <div className="container mx-auto p-4">
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-        <SearchTags tags={tags} handleTagClick={handleTagClick} />
+        <SearchTags tag_name={tags} handleTagClick={handleTagClick} />
 
         <UserList
           users={filteredUsers}
