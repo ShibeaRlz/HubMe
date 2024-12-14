@@ -74,7 +74,7 @@ func (h *icommunityHandler) GetAll(ctx *gin.Context) {
 			"img":        community.Img,
 			"self":       community.Self,
 			"mem1":       community.Mem1,
-			"tags":       community.Tags,
+			"tag_name":       community.Tags,
 			"tag_colors": community.TagColors,
 		}
 		response = append(response, res)

@@ -1,20 +1,20 @@
-import CardTag from "@/components/tags/card-tag";
-import { TagType } from "@/features/tags/types/tag";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import Tag from "@/features/tags/components/Tag";
+import { TagType } from "@/features/tags/types/tag";
 import { useState } from "react";
 import style from "../styles/search-tags.module.scss";
 
 type SearchTagsProps = {
-  tags: TagType[];
+  tag_name: TagType[];
   handleTagClick: (tag: TagType) => void;
 };
 
-export function SearchTags({ tags, handleTagClick }: SearchTagsProps) {
+export function SearchTags({ tag_name, handleTagClick }: SearchTagsProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredTags = tags?.filter(tag =>
-    tag.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredTags = tag_name?.filter(tag =>
+    tag.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -24,15 +24,20 @@ export function SearchTags({ tags, handleTagClick }: SearchTagsProps) {
         type="text"
         placeholder="タグ名で検索..."
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={e => setSearchQuery(e.target.value)}
         className="mb-4"
       />
       <ScrollArea className="w-full whitespace-nowrap rounded-md border gap-1">
         <div className="flex w-max space-x-4 p-4">
           {filteredTags?.map(tag => (
-            <CardTag key={tag.name} variant={tag.color} onClick={() => handleTagClick(tag)}>
+            <Tag
+              key={tag.name}
+              variant={tag.color}
+              onClick={() => handleTagClick(tag)}
+              tagType="button"
+            >
               {tag.name}
-            </CardTag>
+            </Tag>
           ))}
         </div>
         <ScrollBar orientation="horizontal" />

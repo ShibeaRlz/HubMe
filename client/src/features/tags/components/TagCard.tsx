@@ -1,7 +1,5 @@
 // TagCard.tsx
 "use client";
-import CardTag from "@/components/tags/card-tag";
-import { getTags } from "@/components/tags/hooks/get-tags";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,12 +12,14 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { userAtom } from "@/features/account/stores";
 import { communityAtom } from "@/features/account/stores";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { ButtonVariant, TagType } from "@/features/tags/types/tag";
 import { apiClient } from "@/utils/client";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { SearchBar } from "./SearchBar";
+import Tag from "./Tag";
 import style from "./style.module.scss";
 
 type TagCardProps = {
@@ -212,14 +212,15 @@ export const TagCard = ({ type }: TagCardProps) => {
         <ScrollArea className="w-full whitespace-nowrap rounded-md border">
           <div className={style.tagContainer}>
             {filteredTags.map((tag, index) => (
-              <CardTag
+              <Tag
                 key={index}
                 variant={tag.color}
-                className={`${selectedTags.has(index) ? style.selected : ""}`}
+                selected={selectedTags.has(index)}
                 onClick={() => handleTagClick(index)}
+                tagType="button"
               >
                 {tag.name}
-              </CardTag>
+              </Tag>
             ))}
           </div>
           <ScrollBar orientation="horizontal" />
@@ -232,14 +233,15 @@ export const TagCard = ({ type }: TagCardProps) => {
               <div className={style.aiRecommendedLabel}>AIおすすめ</div>
               <div className={style.aiRecommendedTags}>
                 {aiRecommendedTags.map((tag, index) => (
-                  <CardTag
+                  <Tag
                     key={`ai-recommended-${index}`}
                     variant={tag.color}
-                    className={`${selectedTags.has(index) ? style.selected : ""} ${style.aiTag}`}
+                    tagType="button"
+                    selected={selectedTags.has(index)}
                     onClick={() => handleTagClick(index, true)}
                   >
                     {tag.name}
-                  </CardTag>
+                  </Tag>
                 ))}
               </div>
             </div>

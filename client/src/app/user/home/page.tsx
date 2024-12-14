@@ -1,12 +1,12 @@
 "use client";
 
-import CardTag from "@/components/tags/card-tag";
-import { getTags } from "@/components/tags/hooks/get-tags";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Community } from "@/features/account/types/community";
 import { CommunityCard } from "@/features/home/user/components/CommunityCard";
 import { GetCommunities } from "@/features/home/user/hooks/gets-communities";
+import Tag from "@/features/tags/components/Tag";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { TagType } from "@/features/tags/types/tag";
 import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -23,7 +23,7 @@ export default function Home() {
   const [searchQueryTag, setSearchQueryTag] = useState("");
 
   const filteredTags = tags?.filter(tag =>
-    tag.name.toLowerCase().includes(searchQueryTag.toLowerCase())
+    tag.name.toLowerCase().includes(searchQueryTag.toLowerCase()),
   );
 
   useEffect(() => {
@@ -91,15 +91,15 @@ export default function Home() {
             type="text"
             placeholder="タグ名で検索..."
             value={searchQueryTag}
-            onChange={(e) => setSearchQueryTag(e.target.value)}
+            onChange={e => setSearchQueryTag(e.target.value)}
             className="mb-4"
           />
           <ScrollArea className="w-full whitespace-nowrap rounded-md gap-1">
             <div className="flex w-max space-x-4 p-4">
               {filteredTags?.map(tag => (
-                <CardTag key={tag.name} variant={tag.color} onClick={() => handleTagClick(tag)}>
+                <Tag key={tag.name} variant={tag.color} onClick={() => handleTagClick(tag)}>
                   {tag.name}
-                </CardTag>
+                </Tag>
               ))}
             </div>
             <ScrollBar orientation="horizontal" />
@@ -114,7 +114,7 @@ export default function Home() {
                 uuid={community.uuid}
                 communityname={community.name}
                 icon={community.img}
-                tags={community.tag_name}
+                tag_name={community.tag_name}
                 tag_colors={community.tag_colors}
                 detail={community.self}
                 university={community.mem1}

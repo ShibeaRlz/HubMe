@@ -1,11 +1,11 @@
 "use client";
 
-import { getTags } from "@/components/tags/hooks/get-tags";
 import { communityAtom } from "@/features/account/stores";
 import { User } from "@/features/account/types/user";
 import { GetUsers } from "@/features/home/community/hooks/gets-users";
 import { postScout } from "@/features/home/community/hooks/post-scout";
 import { ScoutPostType } from "@/features/home/community/types/scout";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { TagType } from "@/features/tags/types/tag";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -51,6 +51,7 @@ export function CommunityHome() {
   });
 
   const handleCardClick = (user: User) => {
+    console.log("user", user.tag_name);
     if (!selectedUser.includes(user)) {
       setSelectedUser([...selectedUser, user]);
     } else {
@@ -111,7 +112,7 @@ export function CommunityHome() {
       <div className="container mx-auto p-4">
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-        <SearchTags tags={tags} handleTagClick={handleTagClick} />
+        <SearchTags tag_name={tags} handleTagClick={handleTagClick} />
 
         <UserList
           users={filteredUsers}

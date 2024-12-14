@@ -1,9 +1,9 @@
 "use client";
-import CardTag from "@/components/tags/card-tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { updateScoutStatusForReaded } from "@/features/scout/funcs/updateScoutStatus";
+import Tag from "@/features/tags/components/Tag";
 import { heartColor } from "@/styles/theme";
 import { Heart, SquareX } from "lucide-react";
 import React from "react";
@@ -13,7 +13,7 @@ const scoutCardPropsSchema = z.object({
   id: z.number(),
   name: z.string(),
   icon: z.string().optional(),
-  tags: z.string().optional().array().optional(),
+  tag_name: z.string().optional().array().optional(),
   mem1: z.string(),
   isSelected: z.boolean(),
   key: z.number(),
@@ -63,10 +63,10 @@ export const ScoutCard = (props: ScoutCardProps) => {
 
         <div className={style.mainContent}>
           <div className={style.tagsContainer}>
-            {props.tags?.map(tag => (
-              <CardTag key={`tag-${tag}`} variant="red" className={style.tag}>
+            {props.tag_name?.map(tag => (
+              <Tag key={`tag-${tag}`} variant="red" tagType="badge">
                 {tag}
-              </CardTag>
+              </Tag>
             ))}
           </div>
           <h2 className={style.username}>{props.name}</h2>

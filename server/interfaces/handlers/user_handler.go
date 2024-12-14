@@ -96,7 +96,7 @@ func (h *userHandler) GetAll(ctx *gin.Context) {
 			"img":        user.Img,
 			"self":       user.Self,
 			"mem1":       user.Mem1,
-			"tags":       user.Tags,
+			"tag_name":       user.Tags,
 			"tag_colors": user.TagColors,
 		}
 		response = append(response, res)

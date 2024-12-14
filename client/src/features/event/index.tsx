@@ -1,6 +1,5 @@
 "use client";
 
-import CardTag from "@/components/tags/card-tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { TagType } from "@/features/tags/types/tag";
@@ -25,7 +24,7 @@ export function EventCard({
   publisher,
   publisherIcon = "https://github.com/shadcn.png",
   datetime,
-  tags,
+  // tag_name,
   imageUrl = "https://github.com/shadcn.png",
   liked = false,
   handleEventClose,
@@ -36,13 +35,13 @@ export function EventCard({
     <Card className={style.card}>
       <CardHeader className={style.cardHeader}>
         <div className={style.tagWrapper}>
-          <div className={style.tags}>
-            {tags?.map(tag => (
-              <CardTag key={tag.name} variant={"red"}>
+          {/* <div className={style.tags}>
+            {tag_name?.map(tag => (
+              <Tag key={tag.name} variant={"red"} tagType="badge">
                 {tag.name}
-              </CardTag>
+              </Tag>
             ))}
-          </div>
+          </div> */}
         </div>
         <div className={style.closeButton}>
           <SquareX size={24} stroke="#434141" onClick={handleEventClose} />

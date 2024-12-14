@@ -1,6 +1,5 @@
 "use client";
 import Pencil from "@/../public/pencil";
-import CardTag from "@/components/tags/card-tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +10,7 @@ import { accountTypeAtom, communityAtom, userAtom } from "@/features/account/sto
 import { Community } from "@/features/account/types/community";
 import { User } from "@/features/account/types/user";
 import style from "@/features/profile/components/style.module.scss";
+import Tag from "@/features/tags/components/Tag";
 import { ButtonVariant } from "@/features/tags/types/tag";
 import { apiClient } from "@/utils/client";
 import { useAtom } from "jotai/index";
@@ -82,15 +82,16 @@ export const ProfileCard = () => {
           <CardContent>
             <p className={style.profile_self}>{currentProfile?.self || "データなし"}</p>
             <div className={style.profile_tag_container}>
-              <p className={style.profile_tag_name}>設定タグ</p>
+              <p className={style.profile_tags}>設定タグ</p>
               <div className={style.profile_tags}>
                 {currentProfile?.tag_name?.map((tag, index) => (
-                  <CardTag
+                  <Tag
                     key={tag}
                     variant={currentProfile?.tag_colors?.[index]?.toLowerCase() as ButtonVariant}
+                    tagType="badge"
                   >
                     {tag || "タグなし"}
-                  </CardTag>
+                  </Tag>
                 ))}
               </div>
             </div>
@@ -139,12 +140,13 @@ export const ProfileDetailCard = (props: ProfileDetailCardProps) => {
       <Card className={style.profile_detail_card}>
         <div className={style.profile_detail_tags}>
           {detail?.tag_name?.map((tag, index) => (
-            <CardTag
+            <Tag
               key={tag}
               variant={detail?.tag_colors?.[index]?.toLowerCase() as ButtonVariant}
+              tagType="badge"
             >
               {tag || "タグなし"}
-            </CardTag>
+            </Tag>
           ))}
         </div>
         <div className={style.profile_property_container}>

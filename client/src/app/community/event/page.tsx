@@ -1,19 +1,19 @@
 "use client";
 import InviteCheck from "@/../public/invite-check";
 import LikeSearch from "@/../public/like-search";
-import { getTags } from "@/components/tags/hooks/get-tags";
-import TagButton from "@/components/tags/tag-button";
-import { Skeleton } from "@/components/ui/skeleton";
+// import { Skeleton } from "@/components/ui/skeleton";
 import { EventCard } from "@/features/event";
 import { getEvents } from "@/features/event/hooks/get-events";
 import { EventType } from "@/features/event/types/event";
 import { Popup } from "@/features/popup";
+// import TagButton from "@/features/tags/components/Tag";
+import { getTags } from "@/features/tags/hooks/get-tags";
 import { TagType } from "@/features/tags/types/tag";
 import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 
 const EventPage = () => {
-  const [tags, setTags] = useState<TagType[]>([]);
+  const [_tags, setTags] = useState<TagType[]>([]);
   const [events, setEvents] = useState<EventType[]>([]);
   const [invitedEvents, setInvitedEvents] = useState<EventType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -73,10 +73,10 @@ const EventPage = () => {
           <LikeSearch size={100} />
         </div>
 
-        <div className={styles.tagWrapper}>
-          {tags?.length > 0 ? (
+        {/* <div className={styles.tagWrapper}>
+          {tag_name?.length > 0 ? (
             <div className={styles.tagsContainer}>
-              {tags.map(tag => (
+              {tag_name.map(tag => (
                 <TagButton key={tag.name} variant="red">
                   {tag.name}
                 </TagButton>
@@ -85,7 +85,7 @@ const EventPage = () => {
           ) : (
             <Skeleton className="w-full h-[40px] rounded-lg" />
           )}
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.cardWrapper}>

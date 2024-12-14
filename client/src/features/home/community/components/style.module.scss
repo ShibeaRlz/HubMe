@@ -28,6 +28,12 @@
   margin-bottom: 1rem;
 }
 
+.closeIcon {
+  display: none;
+  position: absolute;
+  right: 8px;
+}
+
 .userBadge {
   background-color: white;
   color: black;
@@ -44,12 +50,6 @@
       display: inline;
     }
   }
-}
-
-.closeIcon {
-  display: none;
-  position: absolute;
-  right: 8px;
 }
 
 .messageFormContainer {

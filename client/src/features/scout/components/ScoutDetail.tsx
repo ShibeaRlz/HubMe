@@ -1,4 +1,3 @@
-import CardTag from "@/components/tags/card-tag";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -6,6 +5,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { getCommunityByUUID } from "@/features/account/api";
 import { Community } from "@/features/account/types/community";
 import style from "@/features/scout/styles/ScoutDetail.module.scss";
+import Tag from "@/features/tags/components/Tag";
 import { heartColor } from "@/styles/theme";
 import { Heart, SquareX } from "lucide-react";
 import React from "react";
@@ -24,7 +24,7 @@ type ScoutDetailProps = z.infer<typeof scoutDetailPropsSchema>;
 const communityInfoSchema = z.object({
   name: z.string(),
   mem1: z.string(),
-  tags: z.string().array().optional(),
+  tag_name: z.string().array().optional(),
   icon: z.string().optional(),
   self: z.string().optional(),
 });
@@ -38,7 +38,7 @@ export const ScoutDetail = (props: ScoutDetailProps) => {
     const communityInfo: CommunityInfo = {
       name: communityData.name,
       mem1: communityData.mem1,
-      tags: communityData.tag_name,
+      tag_name: communityData.tag_name,
       icon: communityData.img,
       self: communityData.self,
     };
@@ -78,10 +78,10 @@ export const ScoutDetail = (props: ScoutDetailProps) => {
     <div>
       <Card className={style.scout_detail_card}>
         <div className={style.scout_detail_tags}>
-          {currentCommunityInfo?.tags?.map(tag => (
-            <CardTag key={`tag-${tag}`} variant="red" className={style.tag}>
+          {currentCommunityInfo?.tag_name?.map(tag => (
+            <Tag key={`tag-${tag}`} variant="red" tagType="badge">
               {tag}
-            </CardTag>
+            </Tag>
           )) || "タグなし"}
         </div>
         <div className={style.scout_property_container}>
