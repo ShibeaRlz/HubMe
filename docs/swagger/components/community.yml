@@ -59,7 +59,7 @@ Community:
       description: tagの名前
       items:
         type: string
-    tag_color:
+    tag_colors:
       type: array
       description: tagの色
       items:
