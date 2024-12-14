@@ -12,6 +12,7 @@ type TagProps = {
   children: React.ReactNode;
   defaultActive?: boolean;
   tagType?: "button" | "badge";
+  selected?: boolean;
   onClick?: () => void;
 };
 
@@ -22,22 +23,15 @@ function getContentLength(content: React.ReactNode): number {
   return 0;
 }
 
-function getSizeClass(length: number, styles: any): string {
-  if (length <= 3) return styles.small;
-  if (length <= 5) return styles.medium;
-  return styles.large;
-}
-
-function formatContent(children: React.ReactNode): React.ReactNode {
-  if (typeof children !== "string") {
-    return children;
+function getSizeClass(length: number, styles: { [key: string]: string }): string {
+  switch (true) {
+    case length <= 3:
+      return styles.small;
+    case length <= 5:
+      return styles.medium;
+    default:
+      return styles.large;
   }
-
-  const contentLength = getContentLength(children);
-  if (contentLength > 12) {
-    return `${Array.from(children).slice(0, 8).join("")}...`;
-  }
-  return children;
 }
 
 const Tag: React.FC<TagProps> = ({
@@ -59,13 +53,12 @@ const Tag: React.FC<TagProps> = ({
 
   const contentLength = getContentLength(children);
   const sizeClass = getSizeClass(contentLength, tagType === "badge" ? badge_style : button_style);
-  const formattedContent = formatContent(children);
 
   return (
     <>
       {tagType === "badge" ? (
         <Badge className={cn(badge_style.tag, badge_style[variant], sizeClass)} {...props}>
-          {formattedContent}
+          {children}
         </Badge>
       ) : (
         <Button
@@ -73,7 +66,7 @@ const Tag: React.FC<TagProps> = ({
           onClick={handleClick}
           {...props}
         >
-          {formattedContent}
+          {children}
         </Button>
       )}
     </>
