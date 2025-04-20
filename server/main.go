@@ -3,6 +3,10 @@ package main
 import (
 	"encoding/gob"
 	"fmt"
+	"log"
+	"net/http"
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/golang-migrate/migrate/v4"
 	migrate_mysql "github.com/golang-migrate/migrate/v4/database/mysql"
@@ -20,9 +24,6 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"log"
-	"net/http"
-	"os"
 )
 
 func main() {
@@ -92,7 +93,7 @@ func main() {
 
 	//openai系
 	openaiUsecase := gpt.NewOpenAIClient(apiKey)
-	threadUsecase := usecase.NewThreadUsecase(threadRepo, tagRepo, wsService, openaiUsecase)
+	threadUsecase := usecase.NewThreadUsecase(threadRepo, tagRepo, wsService, openaiUsecase, tagClickHistoryRepo)
 	threadHandler := handlers.NewThreadHandler(threadUsecase, wsService, tagUsecase, tagClickHistoryUsecase)
 
 	authUserHandler := handlers.NewAuthUserHandler(&authUserUsecase, store, &tagUsecase, &threadUsecase)
